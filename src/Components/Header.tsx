@@ -1,6 +1,6 @@
 import { Link,useRouteMatch } from "react-router-dom";
 import styled  from "styled-components";
-import { motion,useAnimation, useViewportScroll } from "framer-motion";
+import { motion,useAnimation, useMotionValueEvent, useScroll } from "framer-motion";
 import { ThemeProvider } from "styled-components";
 import {theme} from "../theme";
 import { useEffect, useState } from "react";
@@ -103,7 +103,7 @@ const logoVariants = {
     transition: {
       repeat: Infinity,
     },
-  },
+  }
 };
 
 const navVariants={
@@ -122,7 +122,7 @@ function Header(){
   const tvMatch = useRouteMatch("/tv");
   const inputAnimation = useAnimation();
   const navAnimation =  useAnimation();
-  const {scrollY}= useViewportScroll();
+  const {scrollY}= useScroll();
   const toggleSearch = () => {
     if(searchOpen){
       //trigger the close animation
@@ -135,16 +135,24 @@ function Header(){
     }
     setSearchOpen((prev) => !prev );
   }
-  useEffect(() => {
-    scrollY.onChange(()=>{
+  useMotionValueEvent(scrollY, "change", (latest)  => {
+
       if(scrollY.get() > 80){
-        navAnimation.start("scroll");
+        navAnimation.start("scroll")
       }else{
         navAnimation.start("top");
       }
-    }
-    );
-  },[scrollY,navAnimation]);
+  });
+  // useEffect(() => {
+  //   scrollY.onChange(()=>{
+  //     if(scrollY.get() > 80){
+  //       navAnimation.start("scroll");
+  //     }else{
+  //       navAnimation.start("top");
+  //     }
+  //   }
+  //   );
+  // },[scrollY,navAnimation]);
 
     return (
       <ThemeProvider theme={theme}>
@@ -155,6 +163,7 @@ function Header(){
             <Logo
               variants={logoVariants}
               whileHover="active"
+              initial="normal"
               xmlns="https://www.w3.org/2000/svg"
               width="1024"
               height="276.742"
