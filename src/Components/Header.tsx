@@ -34,7 +34,7 @@ const Logo = styled(motion.svg)`
     fill: ${(props) => props.theme.red};
     path {
       stroke-width: 6px;
-      stroke: black;
+      stroke: red;
     }
 `;
 const Items = styled.ul`
@@ -157,7 +157,7 @@ function Header(){
     return (
       <ThemeProvider theme={theme}>
         <Nav variants={navVariants}
-        initial={{backgroundColor:"rgba(0,0,0,1)"}}
+        initial={{backgroundColor:"rgba(0,0,0,0)"}}
         animate={navAnimation}>
             <Col>
             <Logo
@@ -173,11 +173,11 @@ function Header(){
             </Logo>
             <Items>
                  <Item>
-                 <Link to="/">Home{homeMatch?.isExact && <Circle layoutId="circle"/>}
+                 <Link to="/">Home{homeMatch?.isExact && <Circle layoutId="circle" />}
                   </Link>
                 </Item>
                 <Item >
-                <Link to="/Tv">Tv Shows{tvMatch && <Circle layoutId="circle"/>}
+                <Link to="/Tv">Tv Shows{tvMatch && <Circle layoutId="circle" />}
                 </Link>
                 </Item>
             </Items>
