@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { theme } from "../theme";
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { get } from 'react-hook-form';
+import { TimesSvg } from '../assets/svg';
 
 
 
@@ -86,19 +87,19 @@ const rowVariants={
 };
 
 const Box = styled(motion.div)<{$bgphoto:string}>`
-height: 200px;
-font-size:66px;
-background-color: white;
-background-image:url(${(props) => props.$bgphoto}) ; 
-background-size: cover;
-background-position: center center;
-cursor: pointer;
-&:first-child{
-  transform-origin: center left;
-}
-&:last-child{
-  transform-origin: center right;
-}
+  height: 200px;
+  font-size:66px;
+  background-color: white;
+  background-image:url(${(props) => props.$bgphoto}) ; 
+  background-size: cover;
+  background-position: center center;
+  cursor: pointer;
+  &:first-child{
+    transform-origin: center left;
+  }
+  &:last-child{
+    transform-origin: center right;
+  }
 `;
 
 const boxVariants={
@@ -121,7 +122,6 @@ const Info = styled(motion.div)`
   position: absolute;
   bottom: 0;
   width: 100%;
-  /* padding:10px; */
   background-color: ${theme.black.lighter};
   color: white;
   opacity:0;
@@ -133,7 +133,7 @@ const Info = styled(motion.div)`
 
 const infoVariants={
   hover:{
-    opacity:1,
+    opacity:0.8,
     transition:{
       delay:0.2,
       duration:0.1,
@@ -144,7 +144,7 @@ const infoVariants={
 };
 
 const Overlay = styled(motion.div)`
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100%;
   height: 100%;
@@ -155,12 +155,62 @@ const Overlay = styled(motion.div)`
 const BigMovie = styled(motion.div)`
   position:absolute;
   width:40vw;
-  height: 40vh;
+  height: 70vh;
   left:0;
-  top:0;
   right:0;
   margin:0 auto;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: ${theme.black.lighter};
 `;
+
+const BigCover = styled.div`
+  width: 100%;
+  height: 400px;
+  background-size: cover;
+  background-position: center center;
+`;
+
+const BigTitle = styled.h3`
+  position: relative;
+  top:-130px;
+  padding:20px;
+  color:${theme.white.lighter};
+  text-align: left;
+  font-size: 46px;
+`;
+
+const BigOverview = styled.p`
+  position: relative;
+  top:-200px;
+  padding:20px;
+  color:${theme.white.lighter};
+  text-align: left;
+`;
+
+export const CloseButton = styled.button`
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    border-radius: 42px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    text-align: center;
+    align-items: center;
+    justify-items: center;
+    border: none;
+    outline: none;
+`;
+export const Svg = styled.svg`
+    width: 30px;
+    height: 30px;
+    fill: #fff;
+    outline: none;
+`;
+
 const offset = 6;
 
 function Home() {
@@ -186,8 +236,11 @@ function Home() {
   };
 
   const onOverlayClick = () => history.push("/");
-
-    return  (
+  const clickedMovie = 
+    bigMovieMatch?.params.movieId && 
+    data?.results.find(movie => String(movie.id) === bigMovieMatch.params.movieId);
+  
+  return  (
         <Wrapper>{isLoading ? ( 
           <Loader>Loading...</Loader> 
         ) : (
@@ -236,10 +289,31 @@ function Home() {
                 exit={{opacity:0}} 
                 animate={{opacity:1}} 
                 />
+                 
                 <BigMovie
-                style ={{ top: scrollY.get() + 300 }}
+                style ={{ top: scrollY.get() + 150 }}
                 layoutId={bigMovieMatch.params.movieId}
-                /></>  ) :null }
+                >
+                  {clickedMovie &&
+                   <>
+                   <BigCover 
+                    style={{
+                      backgroundImage: `linear-gradient(to top,black,transparent),
+                       URL(${makeImagePath(clickedMovie.backdrop_path, "w500")})` 
+                       ,}}
+                    />
+                    <BigTitle>{clickedMovie.title}</BigTitle>
+                    <BigOverview>{clickedMovie.overview}</BigOverview>
+                    </>}
+                    <CloseButton onClick={onOverlayClick}>
+                        <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                         <TimesSvg/>
+                        </Svg>
+                    </CloseButton>
+                </BigMovie>
+               
+                </>  
+              ) :null }
           </AnimatePresence>
         </>
         ) }
