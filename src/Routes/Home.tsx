@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { theme } from "../theme";
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { get } from 'react-hook-form';
-import { TimesSvg } from '../assets/svg';
+import { AngleLeftSvg, AngleRightSvg, TimesSvg } from '../assets/svg';
 
 
 
@@ -50,9 +50,10 @@ const Overview = styled.p`
 const SliderTitle = styled.p`
   position: relative;
   top :0px;
-  width: 200px;
+  left: 5%;
+  width: 95%;  
   height: 120px;
-  margin :0px 20px 20px;
+  margin :0px 5px 20px;
   color: white;
   font-size: 20px;
   font-weight: bolder;
@@ -60,17 +61,18 @@ const SliderTitle = styled.p`
 
 const Slider = styled.div`
   position: relative;
+  width: 90%;
   top: -100px;
-  left: 10px;
+  left: 5%;
   
 `;
 
 const Row = styled(motion.div)`
-position: absolute;
 display: grid;
-width: 99% ;
-grid-template-columns: repeat(6,1fr);
-gap: 5px;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 5px;
+    position: absolute;
+    width: 100%;
 `;
 
 const rowVariants={
@@ -188,7 +190,7 @@ const BigOverview = styled.p`
   text-align: left;
 `;
 
-export const CloseButton = styled.button`
+ const CloseButton = styled.button`
     position: absolute;
     top: 10px;
     right: 10px;
@@ -204,13 +206,40 @@ export const CloseButton = styled.button`
     border: none;
     outline: none;
 `;
-export const Svg = styled.svg`
+ const Svg = styled.svg`
     width: 30px;
     height: 30px;
     fill: #fff;
     outline: none;
 `;
-
+ const SliderControl = styled.div`
+    position: relative;
+`;
+const SliderBtn = styled.button`
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    position: absolute;
+    top: 0; 
+  
+`;
+export const PrevBtn = styled(SliderBtn)`
+    top:70px;
+    left: -70px;
+    fill: ${theme.red};
+`;
+export const NextBtn = styled(SliderBtn)`
+    top:70px;
+    right: -70px;
+    fill: ${theme.red};
+`;
+export const AngleSvg = styled.svg`
+    width: 20px;
+    fill: ${theme.red};
+    outline: none;
+    border: none;
+    
+`;
 const offset = 6;
 
 function Home() {
@@ -219,22 +248,44 @@ function Home() {
   const bigMovieMatch = useRouteMatch<{movieId : string}>("/movies/:movieId");
   const {scrollY} = useScroll();
   const { data , isLoading} = useQuery<IGetMoviesResult>({ queryKey: ["movies", "nowPlaying"], queryFn: getMovies });
-  const [index,setIndex] =useState(0);
   const [leaving,setLeaving] = useState(false);
-  const incraseIndex = () => {
-    if(data){
-      if(leaving) return;
-      toggleLeaving();
-      const totalMovies = data?.results.length - 1;
-      const maxIndex = Math.floor(totalMovies/offset) - 1;
-      setIndex((prev) => prev === maxIndex ? 0 : prev+1)
-    }
-  };
+  // const incraseIndex = () => {
+  //   if(data){
+  //     if(leaving) return;
+  //     toggleLeaving();
+  //     const totalMovies = data?.results.length - 1;
+  //     const maxIndex = Math.floor(totalMovies/offset) - 1;
+  //     setIndex((prev) => prev === maxIndex ? 0 : prev+1)
+  //   }
+  // };
   const toggleLeaving = () =>setLeaving((prev)=> !prev);
   const onBoxClicked = (movieId:number) =>{
     history.push(`/movies/${movieId}`);
   };
-
+  const [index, setIndex] = useState(0);
+  const [isNext, setIsNext] = useState(true);
+  const setPagination = (nextBtn:boolean) => {
+    if(nextBtn) {
+        setIsNext(true);
+    } else {
+        setIsNext(false);
+    }
+    if(data) {
+        if(leaving) return;
+        toggleLeaving();
+        const totalContents = data?.results.length - 1;
+        const maxIndex = Math.floor(totalContents / offset) - 1;
+        return maxIndex;
+    }
+};
+  const increaseIndex = () => {
+    const maxIndex = setPagination(true) as number;
+    setIndex((prev) => prev === maxIndex? 0 : prev + 1);
+};
+const decreaseIndex = () => {
+    const maxIndex = setPagination(false) as number;
+    setIndex((prev) => prev === 0? maxIndex : prev - 1);
+};
   const onOverlayClick = () => history.push("/");
   const clickedMovie = 
     bigMovieMatch?.params.movieId && 
@@ -245,15 +296,14 @@ function Home() {
           <Loader>Loading...</Loader> 
         ) : (
           <>
-          <Banner onClick={incraseIndex} 
+          <Banner 
                   $bgphoto={makeImagePath(data?.results[0].backdrop_path || "")}>
             <Title>{data?.results[0].title }</Title>
             <Overview>{data?.results[0].overview}</Overview>
           </Banner>
           <SliderTitle>현재 상영중인 영화</SliderTitle>
-          <Slider>
-            <AnimatePresence initial={false}
-                    onExitComplete={toggleLeaving}>
+          <Slider>           
+            <AnimatePresence initial={false} onExitComplete={toggleLeaving}  >
             <Row variants={rowVariants} 
             initial="hidden"
             animate="visible"
@@ -279,6 +329,18 @@ function Home() {
                </Box>
               ))}
             </Row>
+            <SliderControl>
+                <PrevBtn onClick={decreaseIndex} onMouseEnter={() => setIsNext(false)}>
+                    <AngleSvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                        <AngleLeftSvg />
+                    </AngleSvg>
+                </PrevBtn>
+                <NextBtn onClick={increaseIndex} onMouseEnter={() => setIsNext(true)}>
+                    <AngleSvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                        <AngleRightSvg></AngleRightSvg>
+                    </AngleSvg>
+                </NextBtn>
+            </SliderControl>
             </AnimatePresence>
           </Slider>
           <AnimatePresence>
