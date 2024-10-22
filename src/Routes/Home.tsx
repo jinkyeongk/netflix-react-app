@@ -10,120 +10,10 @@ import { theme } from "../theme";
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { AngleLeftSvg, AngleRightSvg, TimesSvg } from '../assets/svg';
 import Banner from '../Components/Banner';
+import { Loader, Wrapper } from '../styles/CommonStyle';
+import Slider from '../Components/Slider';
 
 
-
-const Wrapper = styled.div`
-  background-color: black;
-  padding-bottom: 200px;
-`;
-
-const Loader = styled.div`
-  display: flex;
-  height:20vh;
-  justify-content: center;
-  text-align: center;
-`;
-
-
-
-const SliderTitle = styled.p`
-  position: relative;
-  top :0px;
-  left: 5%;
-  width: 95%;  
-  height: 120px;
-  margin :0px 5px 20px;
-  color: white;
-  font-size: 20px;
-  font-weight: bolder;
-`;
-
-const Slider = styled.div`
-  position: relative;
-  width: 90%;
-  top: -100px;
-  left: 5%;
-  
-`;
-
-const Row = styled(motion.div)`
-display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 5px;
-    position: absolute;
-    width: 100%;
-`;
-
-const rowVariants={
-  hidden:{
-    x:window.outerWidth +5,
-  },
-  visible:{
-    x:0,
-  },
-  exit:{
-    x:-window.outerWidth -5,
-  },
-
-};
-
-const Box = styled(motion.div)<{$bgphoto:string}>`
-  height: 200px;
-  font-size:66px;
-  background-color: white;
-  background-image:url(${(props) => props.$bgphoto}) ; 
-  background-size: cover;
-  background-position: center center;
-  cursor: pointer;
-  &:first-child{
-    transform-origin: center left;
-  }
-  &:last-child{
-    transform-origin: center right;
-  }
-`;
-
-const boxVariants={
-  normal:{
-    scale : 1,
-  },
-  hover: {
-    scale : 1.2,
-    y : -50,
-    transition:{
-      delay:0.2,
-      duration:0.1,
-      type:"tween"
-
-    }
-  }
-};
-
-const Info = styled(motion.div)`
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background-color: ${theme.black.lighter};
-  color: white;
-  opacity:0;
-  h4{
-    text-align: center;
-    font-size: 18px;
-  }
-`;
-
-const infoVariants={
-  hover:{
-    opacity:0.8,
-    transition:{
-      delay:0.2,
-      duration:0.1,
-      type:"tween"
-
-    }
-  }
-};
 
 const Overlay = styled(motion.div)`
   position: fixed;
@@ -192,35 +82,7 @@ const BigOverview = styled.p`
     fill: #fff;
     outline: none;
 `;
- const SliderControl = styled.div`
-    position: relative;
-`;
-const SliderBtn = styled.button`
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    position: absolute;
-    top: 0; 
-  
-`;
-export const PrevBtn = styled(SliderBtn)`
-    top:70px;
-    left: -70px;
-    fill: ${theme.red};
-`;
-export const NextBtn = styled(SliderBtn)`
-    top:70px;
-    right: -70px;
-    fill: ${theme.red};
-`;
-export const AngleSvg = styled.svg`
-    width: 20px;
-    fill: ${theme.red};
-    outline: none;
-    border: none;
-    
-`;
-const offset = 6;
+ 
 
 function Home() {
   
@@ -229,39 +91,12 @@ function Home() {
   const {scrollY} = useScroll();
   const { data , isLoading} = useQuery<IGetMoviesResult>({ queryKey: ["movies", "nowPlaying"], queryFn: getMovies });
   let BannerContent = data?.results[0] as IContent;
-  const [leaving,setLeaving] = useState(false);
-  const toggleLeaving = () =>setLeaving((prev)=> !prev);
-  const onBoxClicked = (movieId:number) =>{
-    history.push(`/movies/${movieId}`);
-  };
-  const [index, setIndex] = useState(0);
-  const [isNext, setIsNext] = useState(true);
-  const setPagination = (nextBtn:boolean) => {
-    if(nextBtn) {
-        setIsNext(true);
-    } else {
-        setIsNext(false);
-    }
-    if(data) {
-        if(leaving) return;
-        toggleLeaving();
-        const totalContents = data?.results.length - 1;
-        const maxIndex = Math.floor(totalContents / offset) - 1;
-        return maxIndex;
-    }
-};
-  const increaseIndex = () => {
-    const maxIndex = setPagination(true) as number;
-    setIndex((prev) => prev === maxIndex? 0 : prev + 1);
-};
-const decreaseIndex = () => {
-    const maxIndex = setPagination(false) as number;
-    setIndex((prev) => prev === 0? maxIndex : prev - 1);
-};
+  
+  
   const onOverlayClick = () => history.push("/");
   const clickedMovie = 
     bigMovieMatch?.params.movieId && 
-    data?.results.find(movie => String(movie.id) === bigMovieMatch.params.movieId);
+    data?.results.find(movie => movie.id === +bigMovieMatch.params.movieId);
   
   return  (
         <Wrapper>{isLoading ? ( 
@@ -269,48 +104,7 @@ const decreaseIndex = () => {
         ) : (
           <>
           <Banner data={BannerContent as IContent} />
-          <SliderTitle>현재 상영중인 영화</SliderTitle>
-          <Slider>           
-            <AnimatePresence initial={false} onExitComplete={toggleLeaving}  >
-            <Row variants={rowVariants} 
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            transition={{type:"tween",duration:1}}
-            key={index}
-            >
-            {data?.results
-              .slice(1)  // 0:메인 페이지 , 1~18: 슬라이드 리스트 (6개씩의 frame 3 pages)
-              .slice(offset * index, offset * index + offset)
-              .map((movie)=>(
-                <Box 
-                  layoutId={movie.id + "" }
-                  key={movie.id}
-                  variants={boxVariants}
-                  whileHover="hover"
-                  initial="normal"
-                  onClick={() => onBoxClicked(movie.id)}
-                  $bgphoto={makeImagePath(movie.backdrop_path, "w500")} >
-                    <Info variants={infoVariants}>
-                      <h4>{movie.title}</h4>
-                    </Info>
-               </Box>
-              ))}
-            </Row>
-            <SliderControl>
-                <PrevBtn onClick={decreaseIndex} onMouseEnter={() => setIsNext(false)}>
-                    <AngleSvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                        <AngleLeftSvg />
-                    </AngleSvg>
-                </PrevBtn>
-                <NextBtn onClick={increaseIndex} onMouseEnter={() => setIsNext(true)}>
-                    <AngleSvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                        <AngleRightSvg></AngleRightSvg>
-                    </AngleSvg>
-                </NextBtn>
-            </SliderControl>
-            </AnimatePresence>
-          </Slider>
+          <Slider data={data as IGetMoviesResult} slideTitle={"Now Playing"} ></Slider>
           <AnimatePresence>
             {bigMovieMatch ?(
               <>

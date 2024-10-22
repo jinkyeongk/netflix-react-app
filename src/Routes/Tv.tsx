@@ -1,7 +1,13 @@
 
+import { Wrapper } from '../styles/CommonStyle';
+
+
 
 function Tv(){
-    return <></>;
+    return (<>
+        <Wrapper></Wrapper>
+    </>
+    );
 }
 
 export default Tv;
