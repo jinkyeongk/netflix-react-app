@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # User 
-api.ts
+.env
