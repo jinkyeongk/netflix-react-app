@@ -3,8 +3,7 @@ import styled  from "styled-components";
 import { motion,useAnimation, useMotionValueEvent, useScroll } from "framer-motion";
 import { ThemeProvider } from "styled-components";
 import {theme} from "../theme";
-import { useEffect, useState } from "react";
-import { input } from "framer-motion/client";
+import {  useState } from "react";
 import { useForm } from "react-hook-form";
 
 
@@ -141,7 +140,7 @@ function Header(){
     }
     setSearchOpen((prev) => !prev );
   }
-  useMotionValueEvent(scrollY, "change", (latest)  => {
+  useMotionValueEvent(scrollY, "change", ()  => {
 
       if(scrollY.get() > 80){
         navAnimation.start("scroll")

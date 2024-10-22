@@ -1,14 +1,15 @@
 
 import { useQuery } from '@tanstack/react-query';
-import { getMovies, IGetMoviesResult } from "../api";
+import { getMovies } from "../api";
+import {IContent, IGetMoviesResult} from "../Atoms";
 import styled  from "styled-components";
 import { motion,AnimatePresence,useScroll } from"framer-motion";
 import { makeImagePath } from '../utils';
 import { useState } from 'react';
 import { theme } from "../theme";
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { get } from 'react-hook-form';
 import { AngleLeftSvg, AngleRightSvg, TimesSvg } from '../assets/svg';
+import Banner from '../Components/Banner';
 
 
 
@@ -24,28 +25,7 @@ const Loader = styled.div`
   text-align: center;
 `;
 
-const Banner = styled.div<{ $bgphoto:string}>`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding:60px;
-  background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,1)) ,
-  url( ${(props) => props.$bgphoto });
-  background-size: cover;
-`;
 
-const Title = styled.h2`
-  margin-bottom: 20px;
-  font-size: 72px;
-  color: white;
-`;
-
-const Overview = styled.p`
-  width: 50%;
-  font-size: 20px;
-  color: white;
-`;
 
 const SliderTitle = styled.p`
   position: relative;
@@ -248,16 +228,8 @@ function Home() {
   const bigMovieMatch = useRouteMatch<{movieId : string}>("/movies/:movieId");
   const {scrollY} = useScroll();
   const { data , isLoading} = useQuery<IGetMoviesResult>({ queryKey: ["movies", "nowPlaying"], queryFn: getMovies });
+  let BannerContent = data?.results[0] as IContent;
   const [leaving,setLeaving] = useState(false);
-  // const incraseIndex = () => {
-  //   if(data){
-  //     if(leaving) return;
-  //     toggleLeaving();
-  //     const totalMovies = data?.results.length - 1;
-  //     const maxIndex = Math.floor(totalMovies/offset) - 1;
-  //     setIndex((prev) => prev === maxIndex ? 0 : prev+1)
-  //   }
-  // };
   const toggleLeaving = () =>setLeaving((prev)=> !prev);
   const onBoxClicked = (movieId:number) =>{
     history.push(`/movies/${movieId}`);
@@ -296,11 +268,7 @@ const decreaseIndex = () => {
           <Loader>Loading...</Loader> 
         ) : (
           <>
-          <Banner 
-                  $bgphoto={makeImagePath(data?.results[0].backdrop_path || "")}>
-            <Title>{data?.results[0].title }</Title>
-            <Overview>{data?.results[0].overview}</Overview>
-          </Banner>
+          <Banner data={BannerContent as IContent} />
           <SliderTitle>현재 상영중인 영화</SliderTitle>
           <Slider>           
             <AnimatePresence initial={false} onExitComplete={toggleLeaving}  >
