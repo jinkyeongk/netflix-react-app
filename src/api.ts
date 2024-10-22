@@ -1,14 +1,14 @@
 
 import { atom } from "recoil";
 
-
+const AUTH_KEY = import.meta.env.VITE_AUTH_KEY;
 const BASE_PATH = "https://api.themoviedb.org/3";
 
 const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: import.meta.env.VITE_AUTH_KEY
+      Authorization: AUTH_KEY
     }
   };
   
