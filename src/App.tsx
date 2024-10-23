@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, BrowserRouter } from "react-router-dom";
 import Header from "./Components/Header";
 import Home from "./Routes/Home";
 import Tv from "./Routes/Tv";
@@ -9,6 +9,8 @@ function App() {
   const client = new QueryClient();
   
   return (
+
+<BrowserRouter basename="/netflix-react-app">
     <QueryClientProvider client={client}>
     <Router>
       <Header/>
@@ -25,6 +27,7 @@ function App() {
       </Switch>
     </Router>
     </QueryClientProvider>
+    </BrowserRouter>
   );
 }
 
