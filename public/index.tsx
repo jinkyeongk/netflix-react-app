@@ -4,8 +4,8 @@ import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
 import { createGlobalStyle } from "styled-components";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import App from "./App";
-import { theme } from "./theme";
+import App from "../src/App";
+import { theme } from "../src/theme";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');

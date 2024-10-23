@@ -2,7 +2,11 @@ import { styled } from 'styled-components';
 import { makeImagePath } from '../utils';
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { motion,AnimatePresence } from "framer-motion";
-import { IContent } from '../atoms';
+import { IContent } from '../api';
+
+interface IBanner{
+  data:IContent;
+}
 
 
 const BannerArea = styled.div<{ $bgphoto:string}>`
@@ -55,7 +59,8 @@ const moreInfoVariants={
       }
 };
 
-function Banner({data}:IContent){
+
+function Banner({data}:IBanner){
     return(
         <BannerArea 
                   $bgphoto={makeImagePath(data.backdrop_path || "")}>

@@ -2,16 +2,17 @@ import { AnimatePresence } from 'framer-motion';
 import { AngleSvg, Box, boxVariants, Info, infoVariants, NextBtn, PrevBtn, Row, rowVariants, Slide, SliderControl, SliderTitle } from '../styles/SliderStyle';
 import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
-import { IGetMoviesResult } from '../atoms';
+import { IContent } from '../api';
 import { makeImagePath } from '../utils';
-import { AngleLeftSvg, AngleRightSvg } from '../assets/svg';
+import { AngleLeftSvg, AngleRightSvg } from '../svg';
 
 const offset = 6;
 
 interface ISlide {
-    data: IGetMoviesResult;
+    data: IContent[];
     slideTitle: string;
 }
+
 function Slider({data ,slideTitle}:ISlide){
 
     const history = useHistory();
@@ -31,7 +32,7 @@ function Slider({data ,slideTitle}:ISlide){
         if(data) {
             if(leaving) return;
             toggleLeaving();
-            const totalContents = data?.results.length - 1;
+            const totalContents = data.length - 1;
             const maxIndex = Math.floor(totalContents / offset) - 1;
             return maxIndex;
         }
@@ -57,10 +58,10 @@ function Slider({data ,slideTitle}:ISlide){
             transition={{type:"tween",duration:1}}
             key={index}
             custom={isNext} >
-            {data?.results
+            {data
               .slice(1)  // 0:메인 페이지 , 1~18: 슬라이드 리스트 (6개씩의 frame 3 pages)
               .slice(offset * index, offset * index + offset)
-              .map((movie : {id:number,title:string,backdrop_path:string})=>(
+              .map((movie)=>(
                 <Box 
                   layoutId={movie.id + ""  }
                   key={movie.id}

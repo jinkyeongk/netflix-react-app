@@ -8,6 +8,7 @@ function Search() {
   const location = useLocation();
   const keyword = new URLSearchParams(location.search).get("keyword");
   const { data } = useQuery<IGetContentsResult>({ queryKey: [keyword], queryFn: () => searchEngine(keyword || "")});
+  console.log(data);
   return (<>
       <Wrapper></Wrapper>
   </>

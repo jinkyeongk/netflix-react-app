@@ -1,13 +1,12 @@
 
 import { useQuery } from '@tanstack/react-query';
-import { getMovies, getTopRatedMovies } from "../api";
-import {IContent, IGetMoviesResult, ITopRatedMovie} from "../atoms";
+import { getMovies, IContent, IGetMoviesResult } from "../api";
 import styled  from "styled-components";
 import { motion,AnimatePresence,useScroll } from"framer-motion";
 import { makeImagePath } from '../utils';
 import { theme } from "../theme";
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import {  TimesSvg } from '../assets/svg';
+import {  TimesSvg } from '../svg';
 import Banner from '../Components/Banner';
 import { Loader, Wrapper } from '../styles/CommonStyle';
 import Slider from '../Components/Slider';
@@ -88,13 +87,29 @@ function Home() {
   const history = useHistory();
   const bigMovieMatch = useRouteMatch<{movieId : string}>("/movies/:movieId");
   const {scrollY} = useScroll();
-  const { data ,isLoading } = useQuery<IGetMoviesResult>({ queryKey: ["movies", "nowPlaying"], queryFn: getMovies });
+  const { data  ,isLoading } = useQuery<IGetMoviesResult>({ queryKey: ["movies", "nowPlaying"], queryFn: getMovies });
+  
+  //post_path가 없는 경우는 슬라이드 생성이 되지 않으니 뺌
+  //
+  const contentFilter = (view : IContent) => {
+      if(view.backdrop_path !== null || view.poster_path !== null) {
+          return view;
+      }
+  };
+
+  let slideContents = data?.results as IContent[];
   let BannerContent = data?.results[0] as IContent;
 
+  if(!isLoading && data){
+    slideContents = data?.results?.filter(contentFilter) as IContent[];
+    BannerContent = data?.results?.filter(contentFilter)[0] as IContent;
+  }
+
   const onOverlayClick = () => history.push("/");
+
   const clickedMovie = 
     bigMovieMatch?.params.movieId && 
-    data?.results.find(movie => movie.id === +bigMovieMatch.params.movieId);
+    data?.results.find((movie: { id: number; }) => movie.id === +bigMovieMatch.params.movieId);
   
   return  (
         <Wrapper>{isLoading ? ( 
@@ -102,7 +117,7 @@ function Home() {
         ) : (
           <>
           <Banner data={BannerContent as IContent} /> 
-          <Slider data={data as IGetMoviesResult} slideTitle={"Now Playing"} ></Slider>
+          <Slider data={slideContents as IContent[]} slideTitle={"Now Playing"} ></Slider>
           <AnimatePresence>
             {bigMovieMatch ?(
               <>
