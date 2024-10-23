@@ -1,14 +1,13 @@
 
 import { useQuery } from '@tanstack/react-query';
-import { getMovies } from "../api";
-import {IContent, IGetMoviesResult} from "../Atoms";
+import { getMovies, getTopRatedMovies } from "../api";
+import {IContent, IGetMoviesResult, ITopRatedMovie} from "../atoms";
 import styled  from "styled-components";
 import { motion,AnimatePresence,useScroll } from"framer-motion";
 import { makeImagePath } from '../utils';
-import { useState } from 'react';
 import { theme } from "../theme";
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { AngleLeftSvg, AngleRightSvg, TimesSvg } from '../assets/svg';
+import {  TimesSvg } from '../assets/svg';
 import Banner from '../Components/Banner';
 import { Loader, Wrapper } from '../styles/CommonStyle';
 import Slider from '../Components/Slider';
@@ -89,10 +88,9 @@ function Home() {
   const history = useHistory();
   const bigMovieMatch = useRouteMatch<{movieId : string}>("/movies/:movieId");
   const {scrollY} = useScroll();
-  const { data , isLoading} = useQuery<IGetMoviesResult>({ queryKey: ["movies", "nowPlaying"], queryFn: getMovies });
+  const { data ,isLoading } = useQuery<IGetMoviesResult>({ queryKey: ["movies", "nowPlaying"], queryFn: getMovies });
   let BannerContent = data?.results[0] as IContent;
-  
-  
+
   const onOverlayClick = () => history.push("/");
   const clickedMovie = 
     bigMovieMatch?.params.movieId && 
@@ -103,7 +101,7 @@ function Home() {
           <Loader>Loading...</Loader> 
         ) : (
           <>
-          <Banner data={BannerContent as IContent} />
+          <Banner data={BannerContent as IContent} /> 
           <Slider data={data as IGetMoviesResult} slideTitle={"Now Playing"} ></Slider>
           <AnimatePresence>
             {bigMovieMatch ?(

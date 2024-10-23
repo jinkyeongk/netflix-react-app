@@ -1,8 +1,8 @@
 import { styled } from 'styled-components';
 import { makeImagePath } from '../utils';
 import { IoInformationCircleOutline } from "react-icons/io5";
-import { IContent } from '../Atoms';
 import { motion,AnimatePresence } from "framer-motion";
+import { IContent } from '../atoms';
 
 
 const BannerArea = styled.div<{ $bgphoto:string}>`

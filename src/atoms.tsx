@@ -6,7 +6,13 @@ export interface IMovie{
     poster_path:string;
     overview:string;
 }
-
+export interface ITopRatedMovie{
+    id:number;
+    title:string;
+    backdrop_path:string;
+    poster_path:string;
+    overview:string;
+}
 export interface IGetMoviesResult{
     dates:{
         maximum:string,

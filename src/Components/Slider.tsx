@@ -2,7 +2,7 @@ import { AnimatePresence } from 'framer-motion';
 import { AngleSvg, Box, boxVariants, Info, infoVariants, NextBtn, PrevBtn, Row, rowVariants, Slide, SliderControl, SliderTitle } from '../styles/SliderStyle';
 import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
-import { IGetMoviesResult } from '../Atoms';
+import { IGetMoviesResult } from '../atoms';
 import { makeImagePath } from '../utils';
 import { AngleLeftSvg, AngleRightSvg } from '../assets/svg';
 
@@ -48,14 +48,15 @@ function Slider({data ,slideTitle}:ISlide){
         <>
         <SliderTitle>{slideTitle}</SliderTitle>
           <Slide>           
-            <AnimatePresence initial={false} onExitComplete={toggleLeaving}  >
+            <AnimatePresence initial={false} onExitComplete={toggleLeaving}  
+                            custom={isNext} >
             <Row variants={rowVariants} 
             initial="hidden"
             animate="visible"
             exit="exit"
             transition={{type:"tween",duration:1}}
             key={index}
-            >
+            custom={isNext} >
             {data?.results
               .slice(1)  // 0:메인 페이지 , 1~18: 슬라이드 리스트 (6개씩의 frame 3 pages)
               .slice(offset * index, offset * index + offset)
