@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import svgr from "vite-plugin-svgr";
+//import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(),svgr()]
-  
+  plugins: [react(),svgr()],
+  base: '/netflix-react-app/', //  리포지토리 이름
 });
