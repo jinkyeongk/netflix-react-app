@@ -18,6 +18,7 @@ const Nav = styled(motion.nav)`
     font-size: 12px;
     align-items: center;
     justify-content:space-between;
+    z-index: 99999;
 `;
 
 
@@ -65,6 +66,7 @@ const Search = styled.form`
     margin-top: 1.5px;
     height: 28px;
     z-index: 9999;
+    cursor: pointer;
   }
 `;
 

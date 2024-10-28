@@ -2,12 +2,15 @@ import { motion } from 'framer-motion';
 import { styled } from 'styled-components';
 import { theme } from '../theme';
 
-export const SliderTitle = styled.p`
+export const SlideWrapper = styled.div`
   position: relative;
-  top :0px;
-  left: 5%;
-  width: 95%;  
-  height: 120px;
+  background-color: black;
+`;
+
+export const SliderTitle = styled.p`
+  position: absolute;
+  top : -50px;  
+  left: 5%; 
   margin :0px 5px 20px;
   color: white;
   font-size: 20px;
@@ -17,39 +20,42 @@ export const SliderTitle = styled.p`
 export const Slide = styled.div`
   position: relative;
   width: 90%;
-  top: -100px;
-  left: 5%;
-  
+  top: 0px;
+  left: 5%;  
 `;
 
 export const Row = styled(motion.div)`
+    position: absolute;
     display: grid;
+    width: 100%;
     grid-template-columns: repeat(6, 1fr);
     gap: 5px;
-    position: absolute;
-    width: 100%;
 `;
 
 export const rowVariants={
-  hidden:{
-    x:window.outerWidth +5,
+  hidden: (isNext:boolean) => {
+      return {
+          x: isNext? window.outerWidth + 5 : -window.outerWidth - 5,
+      }
   },
-  visible:{
-    x:0,
+  visible: {
+      x: 0,
   },
-  exit:{
-    x:-window.outerWidth -5,
+  exit: (isNext:boolean) => {
+      return {
+          x: isNext? -window.outerWidth - 5 : window.outerWidth + 5,
+      }
   },
-
 };
 
 export const Box = styled(motion.div)<{$bgphoto:string}>`
   height: 200px;
   font-size:66px;
-  background-color: white;
+  background-color: transparent;
   background-image:url(${(props) => props.$bgphoto}) ; 
   background-size: cover;
   background-position: center center;
+
   cursor: pointer;
   &:first-child{
     transform-origin: center left;
@@ -77,8 +83,9 @@ export const boxVariants={
 
 export const Info = styled(motion.div)`
   position: absolute;
-  bottom: 0;
+  bottom: -10px;
   width: 100%;
+  padding: 5px;
   background-color: ${theme.black.lighter};
   color: white;
   opacity:0;

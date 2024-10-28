@@ -30,7 +30,7 @@ const BigMovie = styled(motion.div)`
   right:0;
   margin:0 auto;
   border-radius: 15px;
-  overflow: hidden;
+  min-height: 80vh;
   background-color: ${theme.black.lighter};
 `;
 
@@ -43,7 +43,7 @@ const BigCover = styled.div`
 
 const BigTitle = styled.h3`
   position: relative;
-  top:-130px;
+  top:-90px;
   padding:20px;
   color:${theme.white.lighter};
   text-align: left;
@@ -52,7 +52,7 @@ const BigTitle = styled.h3`
 
 const BigOverview = styled.p`
   position: relative;
-  top:-200px;
+  top:-100px;
   padding:20px;
   color:${theme.white.lighter};
   text-align: left;
@@ -79,6 +79,7 @@ const BigOverview = styled.p`
     height: 30px;
     fill: #fff;
     outline: none;
+    cursor: pointer;
 `;
  
 

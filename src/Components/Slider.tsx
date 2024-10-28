@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
-import { AngleSvg, Box, boxVariants, Info, infoVariants, NextBtn, PrevBtn, Row, rowVariants, Slide, SliderControl, SliderTitle } from '../styles/SliderStyle';
+import { AngleSvg, Box, boxVariants, Info, infoVariants, NextBtn, PrevBtn, Row, rowVariants, Slide, SliderControl, SliderTitle, SlideWrapper } from '../styles/SliderStyle';
 import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import { IContent } from '../api';
@@ -46,7 +46,7 @@ function Slider({data ,slideTitle}:ISlide){
         setIndex((prev) => prev === 0? maxIndex : prev - 1);
     };
     return (
-        <>
+        <SlideWrapper>
         <SliderTitle>{slideTitle}</SliderTitle>
           <Slide>           
             <AnimatePresence initial={false} onExitComplete={toggleLeaving}  
@@ -90,7 +90,7 @@ function Slider({data ,slideTitle}:ISlide){
             </SliderControl>
             </AnimatePresence>
           </Slide>
-        </>
+        </SlideWrapper>
     );
 };
 

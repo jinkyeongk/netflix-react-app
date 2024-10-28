@@ -10,8 +10,9 @@ interface IBanner{
 
 
 const BannerArea = styled.div<{ $bgphoto:string}>`
-  height: 100vh;
   display: flex;
+  width: 100%;
+  height: 100vh;
   flex-direction: column;
   justify-content: center;
   padding:60px;
@@ -21,26 +22,31 @@ const BannerArea = styled.div<{ $bgphoto:string}>`
 `;
 
 const Title = styled.h2`
+  margin-top: 100px;
   margin-bottom: 20px;
-  font-size: 72px;
-  color: white;
+  font-size: 68px;
+  color: rgba(255,255,255,0.8);
 `;
 
 const Overview = styled.p`
+  position: relative;
   width: 50%;
   font-size: 20px;
-  color: white;
+  color: rgba(255,255,255,0.7);
 `;
 
 const MoreInfoBtn = styled(motion.div)`
+  position: relative;
+  margin-top: 20px;
   width : 130px ;
   height: 40px;
   color: white;
   font-size:18px;
+  top: 0;
   text-align: center;
   align-items: center;
   justify-content: center;
-border-color: white;
+  color: rgba(255,255,255,0.9);
   background-color: rgba(0,0,0,0.5);
   border-radius: 15px;
   cursor:pointer;  
@@ -65,13 +71,14 @@ function Banner({data}:IBanner){
         <BannerArea 
                   $bgphoto={makeImagePath(data.backdrop_path || "")}>
             <Title>{data.title} </Title>
-            <Overview>{data.overview}</Overview>
+            <Overview>{data.overview}
             <AnimatePresence>
                 <MoreInfoBtn variants={moreInfoVariants} 
                   whileHover="hover">
                     <IoInformationCircleOutline style={{fontSize:'26px' ,transform:"translateY(25%)"}}/> More Info
                 </MoreInfoBtn>
             </AnimatePresence>
+            </Overview>
           </BannerArea>
     );
 }
