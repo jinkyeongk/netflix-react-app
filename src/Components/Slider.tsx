@@ -10,19 +10,20 @@ import { AngleLeftSvg, AngleRightSvg } from '../svg';
 const offset = 6;
 
 interface ISlide {
-    Sliderdata: IContent[];
+    sliderdata: IContent[];
     slideTitle: string;
+    keyName:string;
 }
 
-function Slider({Sliderdata ,slideTitle}:ISlide){
+function Slider({sliderdata ,slideTitle, keyName}:ISlide){
 
     const history = useHistory();
     const [index, setIndex] = useState(0);
     const [isNext, setIsNext] = useState(true);
     const [leaving,setLeaving] = useState(false);
     const toggleLeaving = () =>setLeaving((prev)=> !prev);
-    const onBoxClicked = (movieId:number) =>{
-        history.push(`/movies/${movieId}`);
+    const onBoxClicked = (contentId:number) =>{
+        history.push(`/${keyName}/${contentId}`);
     };
     const setPagination = (nextBtn:boolean) => {
         if(nextBtn) {
@@ -30,10 +31,10 @@ function Slider({Sliderdata ,slideTitle}:ISlide){
         } else {
             setIsNext(false);
         }
-        if(Sliderdata) {
+        if(sliderdata) {
             if(leaving) return;
             toggleLeaving();
-            const totalContents = Sliderdata.length - 1;
+            const totalContents = sliderdata.length - 1;
             const maxIndex = Math.floor(totalContents / offset) - 1;
             return maxIndex;
         }
@@ -59,20 +60,20 @@ function Slider({Sliderdata ,slideTitle}:ISlide){
             transition={{type:"tween",duration:1}}
             key={index}
             custom={isNext} >
-            {Sliderdata
+            {sliderdata
               .slice(1)  // 0:메인 페이지 , 1~18: 슬라이드 리스트 (6개씩의 frame 3 pages)
               .slice(offset * index, offset * index + offset)
-              .map((movie)=>(
+              .map((content)=>(
                 <Box 
-                  layoutId={movie.id + ""  }
-                  key={movie.id +index}
+                  layoutId={content.id + ""  }
+                  key={content.id}
                   variants={boxVariants}
                   whileHover="hover"
                   initial="normal"
-                  onClick={() => onBoxClicked(movie.id + index)}
-                  $bgphoto={makeImagePath(movie.backdrop_path, "w500")} >
+                  onClick={() => onBoxClicked(content.id )}
+                  $bgphoto={makeImagePath(content.backdrop_path, "w500")} >
                     <Info variants={infoVariants}>
-                      <h4>{movie.title}</h4>
+                      <h4>{`${keyName}`=="movies"?content.title: content.name}</h4>
                     </Info>
                </Box>
               ))}

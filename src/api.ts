@@ -10,6 +10,7 @@ export interface IContent {
   name?: string; 
   overview: string;
   origin_country?: string[]; 
+  original_language?:string;
 }
 export interface IGetContentsResult {
   page : number;
@@ -17,7 +18,7 @@ export interface IGetContentsResult {
   total_pages: number;
   total_results: number;
 }
-export interface IGetMoviesResult{
+export interface IGetContentResult{
   dates:{
       maximum:string,
       minimum:string
@@ -37,14 +38,22 @@ const options = {
   };
   
 
-export function getMovies(){
-    return fetch(`${BASE_PATH}/movie/now_playing?language=en-US&page=1`,options)
+  export function getContents(keyName:string,subject:string){
+    return fetch(`${BASE_PATH}/${keyName}/${subject}?language=en-US&page=1`,options)
         .then((response) => response.json()
     );
-    
 }
+
+
+export function getTvShows(){
+  return fetch(`${BASE_PATH}/tv/on_the_air?language=en-US&page=1`,options)
+      .then((response) => response.json()
+  );
+  
+}
+
 export function searchEngine(keyword:string){
-  return fetch(`${BASE_PATH}/search/keyword?query=${keyword}&page=1` , options)
+  return fetch(`${BASE_PATH}/search/movie?query=${keyword}&include_adult=false&language=en-US&page=1` , options)
     .then(response => response.json()
 
   );

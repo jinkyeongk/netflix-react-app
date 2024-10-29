@@ -4,6 +4,7 @@ import { theme } from '../theme';
 
 export const SlideWrapper = styled.div`
   position: relative;
+  top: 50px;
   background-color: black;
 `;
 

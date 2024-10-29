@@ -3,9 +3,11 @@ import { makeImagePath } from '../utils';
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { motion,AnimatePresence } from "framer-motion";
 import { IContent } from '../api';
+import { useHistory } from 'react-router';
 
 interface IBanner{
   Bannerdata:IContent;
+  keyName:string;
 }
 
 
@@ -16,7 +18,7 @@ const BannerArea = styled.div<{ $bgphoto:string}>`
   flex-direction: column;
   justify-content: center;
   padding:60px;
-  background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.8)) ,
+  background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,1)) ,
   url( ${(props) => props.$bgphoto });
   background-size: cover;
 `;
@@ -37,22 +39,24 @@ const Overview = styled.div`
 
 const MoreInfoBtn = styled(motion.div)`
   position: relative;
-  margin-top: 20px;
-  width : 130px ;
-  height: 40px;
+  top: 0;
+  width : 128px ;
+  height: 37px;
+  padding-right: 5px;
   color: white;
   font-size:18px;
-  top: 0;
+  margin-top: 15px;
   text-align: center;
   align-items: center;
   justify-content: center;
   color: rgba(255,255,255,0.9);
-  background-color: rgba(0,0,0,0.5);
-  border-radius: 15px;
-  cursor:pointer;  
+  background-color: rgba(255,255,255,0.3);
+  border-radius: 5px;
+  cursor: pointer;
 `;
 const moreInfoVariants={
     normal:{
+      scale: 1,
         backgroundColor : 'rgba(0,0,0,0.5)',
       },
     hover:{
@@ -62,19 +66,30 @@ const moreInfoVariants={
             type:"tween"
       
           }
-      }
+      },
+      
 };
 
 
-function Banner({Bannerdata}:IBanner){
+function Banner({Bannerdata, keyName}:IBanner){
+  const history = useHistory();
+  const BannerId = Bannerdata.id;
+  const onBoxClicked = (BannerId:number) =>{
+    history.push(`/${keyName}/${BannerId}`);
+};
     return(
         <BannerArea 
                   $bgphoto={makeImagePath(Bannerdata.backdrop_path || "")}>
-            <Title>{Bannerdata.title} </Title>
+            <Title>{`${keyName}`=='movies'?Bannerdata.title: Bannerdata.name} </Title>
             <Overview>{Bannerdata.overview}
             <AnimatePresence>
-                <MoreInfoBtn variants={moreInfoVariants} 
-                  whileHover="hover">
+                <MoreInfoBtn 
+                  onClick={() => onBoxClicked(BannerId)} 
+                  layoutId={Bannerdata.id  + ""} 
+                  whileHover="hover"
+                  transition={{type: "tween"}}
+                  variants={moreInfoVariants} 
+                  >
                     <IoInformationCircleOutline style={{fontSize:'26px' ,transform:"translateY(25%)"}}/> More Info
                 </MoreInfoBtn>
             </AnimatePresence>

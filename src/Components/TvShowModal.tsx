@@ -77,18 +77,18 @@ const BigOverview = styled.p`
     outline: none;
     cursor: pointer;
 `;
-interface IMovieModal {
+interface ITvShowModal {
     clickedContent: IContent;
     keyName:string,
     scrollY:number;
 
 }
 
-function MovieModal({ clickedContent, keyName, scrollY }: IMovieModal){
+function TvShowModal({ clickedContent, keyName, scrollY }: ITvShowModal){
     
     // const {scrollY} = useScroll();
     const history = useHistory();
-    const onOverlayClick = () => history.push("/");
+    const onOverlayClick = () => history.push("/tv");
     const contentId = String(clickedContent.id) ;
   
 
@@ -124,4 +124,4 @@ function MovieModal({ clickedContent, keyName, scrollY }: IMovieModal){
         ); 
 }
 
-export default MovieModal;
+export default TvShowModal;

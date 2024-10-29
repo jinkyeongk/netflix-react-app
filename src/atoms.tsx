@@ -1,4 +1,9 @@
+import { atom } from 'recoil';
 
+interface ISlider {
+    keyName: string;
+    title: string;
+}
 export interface IMovie{
     id:number;
     title:string;
@@ -6,6 +11,26 @@ export interface IMovie{
     poster_path:string;
     overview:string;
 }
+
+export const moviesState = atom<ISlider[]>({
+    key: "movies",
+    default: [
+        {
+            keyName: "now_playing",
+            title: "Now Playing ",
+        },{
+            keyName: "top_rated",
+            title: "Top Rated",
+        },{
+            keyName: "popular",
+            title: "Current Popular",
+        },{
+            keyName: "upcoming",
+            title: "Upcoming Movies",
+        },
+    ],
+});
+
 export interface ITopRatedMovie{
     id:number;
     title:string;
