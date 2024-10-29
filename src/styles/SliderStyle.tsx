@@ -83,7 +83,7 @@ export const boxVariants={
 
 export const Info = styled(motion.div)`
   position: absolute;
-  bottom: -10px;
+  bottom: 0px;
   width: 100%;
   padding: 5px;
   background-color: ${theme.black.lighter};

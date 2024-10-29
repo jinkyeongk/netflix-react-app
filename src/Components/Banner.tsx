@@ -5,7 +5,7 @@ import { motion,AnimatePresence } from "framer-motion";
 import { IContent } from '../api';
 
 interface IBanner{
-  data:IContent;
+  Bannerdata:IContent;
 }
 
 
@@ -16,7 +16,7 @@ const BannerArea = styled.div<{ $bgphoto:string}>`
   flex-direction: column;
   justify-content: center;
   padding:60px;
-  background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,1)) ,
+  background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.8)) ,
   url( ${(props) => props.$bgphoto });
   background-size: cover;
 `;
@@ -28,7 +28,7 @@ const Title = styled.h2`
   color: rgba(255,255,255,0.8);
 `;
 
-const Overview = styled.p`
+const Overview = styled.div`
   position: relative;
   width: 50%;
   font-size: 20px;
@@ -66,12 +66,12 @@ const moreInfoVariants={
 };
 
 
-function Banner({data}:IBanner){
+function Banner({Bannerdata}:IBanner){
     return(
         <BannerArea 
-                  $bgphoto={makeImagePath(data.backdrop_path || "")}>
-            <Title>{data.title} </Title>
-            <Overview>{data.overview}
+                  $bgphoto={makeImagePath(Bannerdata.backdrop_path || "")}>
+            <Title>{Bannerdata.title} </Title>
+            <Overview>{Bannerdata.overview}
             <AnimatePresence>
                 <MoreInfoBtn variants={moreInfoVariants} 
                   whileHover="hover">

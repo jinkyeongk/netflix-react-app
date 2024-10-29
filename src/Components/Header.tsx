@@ -2,7 +2,7 @@ import { Link,useHistory,useRouteMatch } from "react-router-dom";
 import styled  from "styled-components";
 import { motion,useAnimation, useMotionValueEvent, useScroll } from "framer-motion";
 import { ThemeProvider } from "styled-components";
-import {theme} from "../theme";
+import { theme } from "../theme";
 import {  useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -15,7 +15,7 @@ const Nav = styled(motion.nav)`
     height: 80px;    
     padding: 20px 60px;
     color: white;
-    font-size: 12px;
+    font-size: 15px;
     align-items: center;
     justify-content:space-between;
     z-index: 99999;

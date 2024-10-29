@@ -6,14 +6,15 @@ import { IContent } from '../api';
 import { makeImagePath } from '../utils';
 import { AngleLeftSvg, AngleRightSvg } from '../svg';
 
+
 const offset = 6;
 
 interface ISlide {
-    data: IContent[];
+    Sliderdata: IContent[];
     slideTitle: string;
 }
 
-function Slider({data ,slideTitle}:ISlide){
+function Slider({Sliderdata ,slideTitle}:ISlide){
 
     const history = useHistory();
     const [index, setIndex] = useState(0);
@@ -29,10 +30,10 @@ function Slider({data ,slideTitle}:ISlide){
         } else {
             setIsNext(false);
         }
-        if(data) {
+        if(Sliderdata) {
             if(leaving) return;
             toggleLeaving();
-            const totalContents = data.length - 1;
+            const totalContents = Sliderdata.length - 1;
             const maxIndex = Math.floor(totalContents / offset) - 1;
             return maxIndex;
         }
@@ -58,17 +59,17 @@ function Slider({data ,slideTitle}:ISlide){
             transition={{type:"tween",duration:1}}
             key={index}
             custom={isNext} >
-            {data
+            {Sliderdata
               .slice(1)  // 0:메인 페이지 , 1~18: 슬라이드 리스트 (6개씩의 frame 3 pages)
               .slice(offset * index, offset * index + offset)
               .map((movie)=>(
                 <Box 
                   layoutId={movie.id + ""  }
-                  key={movie.id}
+                  key={movie.id +index}
                   variants={boxVariants}
                   whileHover="hover"
                   initial="normal"
-                  onClick={() => onBoxClicked(movie.id)}
+                  onClick={() => onBoxClicked(movie.id + index)}
                   $bgphoto={makeImagePath(movie.backdrop_path, "w500")} >
                     <Info variants={infoVariants}>
                       <h4>{movie.title}</h4>
