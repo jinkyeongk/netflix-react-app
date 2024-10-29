@@ -123,6 +123,7 @@ const navVariants={
 interface IForm{
   keyword:string;
 }
+
 function Header(){
   const [searchOpen,setSearchOpen] = useState(false);
   const homeMatch = useRouteMatch("/");
@@ -192,7 +193,7 @@ function Header(){
                   </Link>
                 </Item>
                 <Item >
-                <Link to="/Tv">Tv Shows{tvMatch && <Circle layoutId="circle" />}
+                <Link to="/tv">Tv Shows{tvMatch && <Circle layoutId="circle" />}
                 </Link>
                 </Item>
             </Items>
