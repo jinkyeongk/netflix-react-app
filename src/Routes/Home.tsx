@@ -16,7 +16,7 @@ function Home() {
   
   const bigMovieMatch = useRouteMatch<{movieId : string}>("/movies/:movieId"); //[prams.movieId], path, url
   const { data  ,isLoading } = useQuery<IGetContentResult>({ queryKey: ["movies", "now_playing"], queryFn: () => getContents("movie", "now_playing") });
-  const { data : dataTopRated ,isLoading : isLoadingTopRated } = useQuery<IGetContentResult>({ queryKey: ["movies", "top_rated"], queryFn: getTopRatedMovies });
+  const { data : dataTopRated ,isLoading : isLoadingTopRated } = useQuery<IGetContentResult>({ queryKey: ["movies", "top_rated"], queryFn: () =>getContents("movie", "top_rated")  });
   const {scrollY} = useScroll();
   //post_path가 없는 경우는 슬라이드 생성이 되지 않으니 뺌
   const contentFilter = (view : IContent) => {
