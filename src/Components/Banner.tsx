@@ -7,6 +7,7 @@ import { useHistory } from 'react-router';
 
 interface IBanner{
   Bannerdata:IContent;
+  content:string;
   keyName:string;
 }
 
@@ -37,30 +38,25 @@ const Overview = styled.div`
   color: rgba(255,255,255,0.7);
 `;
 
-const MoreInfoBtn = styled(motion.div)`
-  position: relative;
-  top: 0;
-  width : 128px ;
-  height: 37px;
-  padding-right: 5px;
-  color: white;
+const MoreInfoBtn = styled(motion.button)`
+  display: block;
   font-size:18px;
+  padding-bottom: 6px;
+  padding-right: 10px;
   margin-top: 15px;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
   color: rgba(255,255,255,0.9);
-  background-color: rgba(255,255,255,0.3);
+  background-color: rgba(255,255,255,0.2);
   border-radius: 5px;
+  border-width: 0px;
   cursor: pointer;
 `;
 const moreInfoVariants={
     normal:{
       scale: 1,
-        backgroundColor : 'rgba(0,0,0,0.5)',
+        backgroundColor : 'rgba(255,255,255,0.2)',
       },
     hover:{
-        backgroundColor : 'rgba(255,255,255,0.2)',
+        backgroundColor : 'rgba(255,255,255,0.4)',
         transition:{
             duration:0.7,
             type:"tween"
@@ -71,21 +67,21 @@ const moreInfoVariants={
 };
 
 
-function Banner({Bannerdata, keyName}:IBanner){
+function Banner({Bannerdata, content,keyName}:IBanner){
   const history = useHistory();
   const BannerId = Bannerdata.id;
   const onBoxClicked = (BannerId:number) =>{
-    history.push(`/${keyName}/${BannerId}`);
+    history.push(`/${content}/${keyName}/${BannerId}`);
 };
     return(
         <BannerArea 
                   $bgphoto={makeImagePath(Bannerdata.backdrop_path || "")}>
-            <Title>{`${keyName}`=='movies'?Bannerdata.title: Bannerdata.name} </Title>
+            <Title>{Bannerdata.title?Bannerdata.title: Bannerdata.name} </Title>
             <Overview>{Bannerdata.overview}
             <AnimatePresence>
                 <MoreInfoBtn 
                   onClick={() => onBoxClicked(BannerId)} 
-                  layoutId={Bannerdata.id  + ""} 
+                  layoutId={Bannerdata.id  + "_" + keyName} 
                   whileHover="hover"
                   transition={{type: "tween"}}
                   variants={moreInfoVariants} 

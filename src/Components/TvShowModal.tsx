@@ -1,10 +1,12 @@
 import { styled } from 'styled-components';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { theme } from '../theme';
 import { makeImagePath } from '../utils';
 import {  TimesSvg } from '../svg';
 import { useHistory } from 'react-router';
 import { IContent } from '../api';
+import { useRecoilValue } from 'recoil';
+import { rootRecoil } from '../atoms';
 
 const Overlay = styled(motion.div)`
   position: fixed;
@@ -25,6 +27,7 @@ const BigMovie = styled(motion.div)`
   margin:0 auto;
   border-radius: 15px;
   min-height: 80vh;
+  z-index: 1;
   background-color: ${theme.black.lighter};
 `;
 
@@ -86,22 +89,25 @@ interface ITvShowModal {
 
 function TvShowModal({ clickedContent, keyName, scrollY }: ITvShowModal){
     
-    // const {scrollY} = useScroll();
     const history = useHistory();
-    const onOverlayClick = () => history.push("/tv");
+    //const onOverlayClick = () => history.push(`/`);
+    const getRoot = useRecoilValue(rootRecoil);
+    const onOverlayClick = () => history.push(getRoot[keyName]);
     const contentId = String(clickedContent.id) ;
   
 
     return (
-        <>
+         <AnimatePresence>
                 <Overlay 
+                key={keyName}
                 onClick={onOverlayClick} 
                 exit={{opacity:0}} 
                 animate={{opacity:1}} 
                 />
                 <BigMovie
-                style ={{ top: scrollY + 150 }}
-                layoutId={contentId}
+                  transition={{type: "tween"}}
+                  style ={{ top: scrollY + 150 }}
+                  layoutId={contentId + "_" + keyName}
                 >
                     {clickedContent &&
                     <>
@@ -111,7 +117,7 @@ function TvShowModal({ clickedContent, keyName, scrollY }: ITvShowModal){
                         URL(${makeImagePath(clickedContent?.backdrop_path)})` 
                         ,}}
                     />
-                    <BigTitle>{`${keyName}`=='movies'?clickedContent.title : clickedContent.name}</BigTitle>
+                    <BigTitle>{clickedContent.title?clickedContent.title : clickedContent.name}</BigTitle>
                     <BigOverview>{clickedContent.overview}</BigOverview>
                     </>}
                     <CloseButton onClick={onOverlayClick}>
@@ -120,7 +126,8 @@ function TvShowModal({ clickedContent, keyName, scrollY }: ITvShowModal){
                         </Svg>
                     </CloseButton>
                 </BigMovie>
-         </>
+                </AnimatePresence>
+        
         ); 
 }
 

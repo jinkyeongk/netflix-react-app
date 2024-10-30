@@ -3,25 +3,24 @@ import { styled } from 'styled-components';
 import { theme } from '../theme';
 
 export const SlideWrapper = styled.div`
-  position: relative;
-  top: 50px;
+   position: relative;
+  width: 100%;
+  height: 280px;
   background-color: black;
 `;
 
 export const SliderTitle = styled.p`
   position: absolute;
-  top : -50px;  
-  left: 5%; 
-  margin :0px 5px 20px;
+  left: 5%;
   color: white;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bolder;
 `;
 
 export const Slide = styled.div`
   position: relative;
   width: 90%;
-  top: 0px;
+  top: 45px;
   left: 5%;  
 `;
 
@@ -31,6 +30,7 @@ export const Row = styled(motion.div)`
     width: 100%;
     grid-template-columns: repeat(6, 1fr);
     gap: 5px;
+
 `;
 
 export const rowVariants={

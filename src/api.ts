@@ -38,19 +38,13 @@ const options = {
   };
   
 
-  export function getContents(keyName:string,subject:string){
-    return fetch(`${BASE_PATH}/${keyName}/${subject}?language=en-US&page=1`,options)
+  export function getContents(content:string,keyName:string){
+    return fetch(`${BASE_PATH}/${content}/${keyName}?language=en-US&page=1`,options)
         .then((response) => response.json()
     );
 }
 
 
-export function getTvShows(){
-  return fetch(`${BASE_PATH}/tv/on_the_air?language=en-US&page=1`,options)
-      .then((response) => response.json()
-  );
-  
-}
 
 export function searchEngine(keyword:string){
   return fetch(`${BASE_PATH}/search/movie?query=${keyword}&include_adult=false&language=en-US&page=1` , options)

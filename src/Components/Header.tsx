@@ -151,16 +151,6 @@ function Header(){
         navAnimation.start("top");
       }
   });
-  // useEffect(() => {
-  //   scrollY.onChange(()=>{
-  //     if(scrollY.get() > 80){
-  //       navAnimation.start("scroll");
-  //     }else{
-  //       navAnimation.start("top");
-  //     }
-  //   }
-  //   );
-  // },[scrollY,navAnimation]);
   const history = useHistory();
 
   const {register,handleSubmit} = useForm<IForm>();

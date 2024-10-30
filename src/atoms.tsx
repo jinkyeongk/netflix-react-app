@@ -1,6 +1,7 @@
 import { atom } from 'recoil';
 
 interface ISlider {
+    content:string;
     keyName: string;
     title: string;
 }
@@ -11,26 +12,61 @@ export interface IMovie{
     poster_path:string;
     overview:string;
 }
-
-export const moviesState = atom<ISlider[]>({
-    key: "movies",
+export const tvRecoil = atom<ISlider[]>({
+    key: "tvShows",
     default: [
-        {
-            keyName: "now_playing",
-            title: "Now Playing ",
+        {   
+            content:"tv",
+            keyName: "airing_today",
+            title: "Airing Today",
         },{
+            content:"tv",
             keyName: "top_rated",
             title: "Top Rated",
         },{
+            content:"tv",
             keyName: "popular",
-            title: "Current Popular",
+            title: "Currently Popular",
         },{
+            content:"tv",
+            keyName: "on_the_air",
+            title: "On The Air",
+        },
+    ],
+});
+export const moviesRecoil = atom<ISlider[]>({
+    key: "movies",
+    default: [
+        {   content:"movie",
+            keyName: "now_playing",
+            title: "Now Playing ",
+        },{
+            content:"movie",
+            keyName: "top_rated",
+            title: "Top Rated",
+        },{
+            content:"movie",
+            keyName: "popular",
+            title: "Currently Popular",
+        },{
+            content:"movie",
             keyName: "upcoming",
             title: "Upcoming Movies",
         },
     ],
 });
+interface IRoot {
+    [key: string] : string;
+}
 
+export const rootRecoil = atom<IRoot>({
+    key: "root",
+    default: {
+        movie: "/",
+        tv: "/tv",
+        search: "/search",
+    },
+});
 export interface ITopRatedMovie{
     id:number;
     title:string;
