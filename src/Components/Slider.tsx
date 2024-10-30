@@ -1,5 +1,5 @@
 import { AnimatePresence, useScroll } from 'framer-motion';
-import { AngleSvg, Box, boxVariants, Info, infoVariants, NextBtn, PrevBtn, Row, rowVariants, Slide, SliderControl, SliderTitle, SlideWrapper } from '../styles/SliderStyle';
+import { AngleSvg, Box, boxVariants, Info,  infoVariants,  NextBtn, PrevBtn, Row, rowVariants, Slide, SliderControl, SliderTitle, SlideWrapper } from '../styles/SliderStyle';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useState } from 'react';
 import { getContents,  IContent, IGetContentResult } from '../api';
@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import Banner from './Banner';
 import { Loader } from '../styles/CommonStyle';
 import TvShowModal from './TvShowModal';
+
 
 
 const offset = 6;
@@ -99,6 +100,7 @@ function Slider({keyContent, keyName, slideTitle, hasBanner}:ISlide){
         const maxIndex = setPagination(false) as number;
         setIndex((prev) => prev === 0? maxIndex : prev - 1);
     };
+    
     return (
         <>
         {isLoading  ? ( 
@@ -120,7 +122,7 @@ function Slider({keyContent, keyName, slideTitle, hasBanner}:ISlide){
                         .slice(offset * index, offset * index + offset)
                         .map((content)=>(
                             <Box 
-                            layoutId={content.id + "_"+keyName  }
+                            layoutId={content.id + "_" +keyName}
                             key={content.id}
                             variants={boxVariants}
                             whileHover="hover"
@@ -144,7 +146,7 @@ function Slider({keyContent, keyName, slideTitle, hasBanner}:ISlide){
                             <AngleSvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                                 <AngleRightSvg></AngleRightSvg>
                             </AngleSvg>
-                        </NextBtn>
+                        </NextBtn> 
                     </SliderControl>
                 </AnimatePresence>
             </Slide>
@@ -152,7 +154,7 @@ function Slider({keyContent, keyName, slideTitle, hasBanner}:ISlide){
         </>
      )}
         {bigContentMatch ?(
-            <TvShowModal clickedContent={clickedContent as IContent} keyName={keyContent} scrollY={scrollY.get()} />
+            <TvShowModal clickedContent={clickedContent as IContent} content={keyContent}  keyName ={keyName} scrollY={scrollY.get()} />
         )  
         :null }
     

@@ -105,3 +105,22 @@ export interface ISearched{
     vote_average: number
     vote_count: number;
 }
+interface IGenres {
+    id: number;
+    name: string;
+}
+export interface IGetDetails{
+    id: number;
+    name: string;
+    original_name: string;
+    backdrop_path : string;
+    poster_path: string;
+    genres: IGenres[];
+    overview: string;
+    first_air_date: string;
+    last_air_date: string;
+    number_of_episodes: number;
+    number_of_seasons: number;
+    adult: boolean;
+    vote_average: number;
+}

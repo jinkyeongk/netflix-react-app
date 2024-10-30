@@ -52,9 +52,8 @@ export function searchEngine(keyword:string){
 
   );
 }
-export function getTopRatedMovies(){
-  return fetch(`${BASE_PATH}/movie/top_rated?language=en-US&page=1&region=KR` , options)
-    .then(response => response.json()
-
+export function getDetails(content:string,id:string){
+  return fetch(`${BASE_PATH}/${content}/${id}?language=en-US&page=1`,options)
+      .then((response) => response.json()
   );
 }

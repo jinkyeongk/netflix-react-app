@@ -4,9 +4,11 @@ import { theme } from '../theme';
 import { makeImagePath } from '../utils';
 import {  TimesSvg } from '../svg';
 import { useHistory } from 'react-router';
-import { IContent } from '../api';
+import { getDetails, IContent } from '../api';
 import { useRecoilValue } from 'recoil';
-import { rootRecoil } from '../atoms';
+import { IGetDetails, rootRecoil } from '../atoms';
+import { useQuery } from '@tanstack/react-query';
+import { FaStar } from "react-icons/fa6";
 
 const Overlay = styled(motion.div)`
   position: fixed;
@@ -15,6 +17,7 @@ const Overlay = styled(motion.div)`
   height: 100%;
   background-color: rgba(0,0,0,0.5);
   opacity: 0;
+  z-index: 99;
 `;
 
 const BigMovie = styled(motion.div)`
@@ -27,7 +30,7 @@ const BigMovie = styled(motion.div)`
   margin:0 auto;
   border-radius: 15px;
   min-height: 80vh;
-  z-index: 1;
+  z-index: 100;
   background-color: ${theme.black.lighter};
 `;
 
@@ -80,23 +83,33 @@ const BigOverview = styled.p`
     outline: none;
     cursor: pointer;
 `;
+export const Vote = styled.div`
+    display: block;
+    height: 20px;
+    font-size: 20px;
+    color: #ffd954;
+`;
 interface ITvShowModal {
     clickedContent: IContent;
-    keyName:string,
+    content:string;
+    keyName:string;
     scrollY:number;
 
 }
 
-function TvShowModal({ clickedContent, keyName, scrollY }: ITvShowModal){
+function TvShowModal({ clickedContent, content,keyName, scrollY }: ITvShowModal){
     
     const history = useHistory();
-    //const onOverlayClick = () => history.push(`/`);
     const getRoot = useRecoilValue(rootRecoil);
-    const onOverlayClick = () => history.push(getRoot[keyName]);
-    const contentId = String(clickedContent.id) ;
-  
+    const onOverlayClick = () => history.push(getRoot[content]);
+    console.log(getRoot[content]);
+    const contentId = clickedContent.id ;
+    const { data } = useQuery<IGetDetails>(
+      { queryKey: [content, contentId], queryFn:
+      () => getDetails(content,String(contentId))}
+  );
 
-    return (
+    return (<>
          <AnimatePresence>
                 <Overlay 
                 key={keyName}
@@ -105,9 +118,8 @@ function TvShowModal({ clickedContent, keyName, scrollY }: ITvShowModal){
                 animate={{opacity:1}} 
                 />
                 <BigMovie
-                  transition={{type: "tween"}}
                   style ={{ top: scrollY + 150 }}
-                  layoutId={contentId + "_" + keyName}
+                  layoutId={contentId + "_" +  keyName}
                 >
                     {clickedContent &&
                     <>
@@ -118,7 +130,9 @@ function TvShowModal({ clickedContent, keyName, scrollY }: ITvShowModal){
                         ,}}
                     />
                     <BigTitle>{clickedContent.title?clickedContent.title : clickedContent.name}</BigTitle>
-                    <BigOverview>{clickedContent.overview}</BigOverview>
+                    <BigOverview>
+                    <Vote><FaStar />Rated : {data?.vote_average.toFixed(2)}</Vote>
+                      {clickedContent.overview}</BigOverview>
                     </>}
                     <CloseButton onClick={onOverlayClick}>
                         <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -127,7 +141,7 @@ function TvShowModal({ clickedContent, keyName, scrollY }: ITvShowModal){
                     </CloseButton>
                 </BigMovie>
                 </AnimatePresence>
-        
+                </>
         ); 
 }
 
