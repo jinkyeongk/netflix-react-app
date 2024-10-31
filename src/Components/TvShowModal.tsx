@@ -88,6 +88,7 @@ export const Vote = styled.div`
     height: 20px;
     font-size: 20px;
     color: #ffd954;
+    margin-bottom: 5px;
 `;
 interface ITvShowModal {
     clickedContent: IContent;
@@ -131,7 +132,7 @@ function TvShowModal({ clickedContent, content,keyName, scrollY }: ITvShowModal)
                     />
                     <BigTitle>{clickedContent.title?clickedContent.title : clickedContent.name}</BigTitle>
                     <BigOverview>
-                    <Vote><FaStar />Rated : {data?.vote_average.toFixed(2)}</Vote>
+                    <Vote><FaStar /> Rated : {data?.vote_average.toFixed(2)}</Vote>
                       {clickedContent.overview}</BigOverview>
                     </>}
                     <CloseButton onClick={onOverlayClick}>
