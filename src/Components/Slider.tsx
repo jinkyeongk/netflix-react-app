@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import Banner from './Banner';
 import { Loader } from '../styles/CommonStyle';
 import TvShowModal from './TvShowModal';
+import MovieModal from './MovieModal';
 
 
 
@@ -153,9 +154,11 @@ function Slider({keyContent, keyName, slideTitle, hasBanner}:ISlide){
         </SlideWrapper>
         </>
      )}
-        {bigContentMatch ?(
+        {bigContentMatch ? (keyContent == 'tv' ? (
             <TvShowModal clickedContent={clickedContent as IContent} content={keyContent}  keyName ={keyName} scrollY={scrollY.get()} />
-        )  
+        ) :(
+            <MovieModal clickedContent={clickedContent as IContent} content={keyContent}  keyName ={keyName} scrollY={scrollY.get()} />
+        ) )
         :null }
     
     </>);

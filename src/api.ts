@@ -9,6 +9,7 @@ export interface IContent {
   title?: string; 
   name?: string; 
   overview: string;
+  release_date?: string;
   origin_country?: string[]; 
   original_language?:string;
 }

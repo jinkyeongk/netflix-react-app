@@ -85,8 +85,6 @@ export interface IMovies {
     vote_average: number;
 }
 
-
-
 export interface IGetContentsResult {
     page : number;
     results: [];
@@ -121,6 +119,17 @@ export interface IGetDetails{
     last_air_date: string;
     number_of_episodes: number;
     number_of_seasons: number;
+    adult: boolean;
+    vote_average: number;
+}
+export interface IGetMovieDetails{
+    id: number;
+    name: string;
+    backdrop_path : string;
+    poster_path: string;
+    genres: IGenres[];
+    overview: string;
+    runtime: string;
     adult: boolean;
     vote_average: number;
 }

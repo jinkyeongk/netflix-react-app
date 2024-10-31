@@ -16,9 +16,7 @@ function Tv(){
         <Wrapper>
           <>
             {getTvShows.map((tv,index) => (
-              
               <Slider key={tv.keyName} keyContent={tv.content} keyName={tv.keyName} slideTitle={tv.title} hasBanner={index == 0 ? true : false} ></Slider>
-              
             ))}
           </>
        </Wrapper>
