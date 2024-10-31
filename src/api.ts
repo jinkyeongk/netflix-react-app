@@ -47,8 +47,8 @@ const options = {
 
 
 
-export function searchEngine(keyword:string){
-  return fetch(`${BASE_PATH}/search/movie?query=${keyword}&include_adult=false&language=en-US&page=1` , options)
+export function searchEngine(content:string, keyword:string){
+  return fetch(`${BASE_PATH}/search/${content}?query=${keyword}&include_adult=false&language=en-US&page=1` , options)
     .then(response => response.json()
 
   );

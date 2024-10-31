@@ -60,7 +60,7 @@ export const Vote = styled.div`
     display: block;
     height: 20px;
     font-size: 20px;
-    color: #ffd954;
+    color: orange;
     margin-bottom: 5px;
 `;
 

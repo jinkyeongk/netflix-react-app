@@ -7,7 +7,7 @@ import { useRecoilValue } from 'recoil';
 import { IGetDetails, rootRecoil } from '../atoms';
 import { useQuery } from '@tanstack/react-query';
 import { FaStar } from "react-icons/fa6";
-import { BigCover, BigMovie, BigOverview, BigTitle, CloseButton, DetailInfo, Overlay, Svg, Vote } from '../styles/ModalStyle';
+import { BigCover, BigMovie, BigOverview, BigTitle, CloseButton, DetailInfo, Overlay, OverviewContents, Svg, Vote } from '../styles/ModalStyle';
 
 interface ITvShowModal {
     clickedContent: IContent;
@@ -22,9 +22,8 @@ function TvShowModal({ clickedContent, content,keyName, scrollY }: ITvShowModal)
     const history = useHistory();
     const getRoot = useRecoilValue(rootRecoil);
     const onOverlayClick = () => history.push(getRoot[content]);
-    console.log(getRoot[content]);
     const contentId = clickedContent.id ;
-    const { data } = useQuery<IGetDetails>(
+    const { data, isLoading } = useQuery<IGetDetails>(
       { queryKey: [content, contentId], queryFn:
       () => getDetails(content,String(contentId))}
   );
@@ -41,7 +40,7 @@ function TvShowModal({ clickedContent, content,keyName, scrollY }: ITvShowModal)
                   style ={{ top: scrollY + 150 }}
                   layoutId={contentId + "_" +  keyName}
                 >
-                    {clickedContent &&
+                    {clickedContent && !isLoading &&
                     <>
                     <BigCover 
                     style={{
@@ -53,7 +52,8 @@ function TvShowModal({ clickedContent, content,keyName, scrollY }: ITvShowModal)
                     <BigOverview>
                     <Vote><FaStar /> Rated : {data?.vote_average.toFixed(2)}</Vote>
                     <DetailInfo>  {data?.number_of_seasons} Seasons</DetailInfo>
-                      {clickedContent.overview}</BigOverview>
+                      <OverviewContents>{clickedContent.overview}</OverviewContents>
+                      </BigOverview>
                     </>}
                     <CloseButton onClick={onOverlayClick}>
                         <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">

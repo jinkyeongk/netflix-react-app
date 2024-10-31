@@ -14,3 +14,12 @@ export const Loader = styled.div`
   justify-content: center;
   text-align: center;
 `;
+
+export const Title = styled.div`
+  position: absolute;
+  top: 140px;
+  width: 100%;
+  font-size: 50px;
+  text-align: center;
+
+`;

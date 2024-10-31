@@ -9,6 +9,7 @@ import { IGetMovieDetails, rootRecoil } from '../atoms';
 import { useQuery } from '@tanstack/react-query';
 import { AnimatePresence } from 'framer-motion';
 import { FaStar } from 'react-icons/fa6';
+import { MdOutlineTimer } from 'react-icons/md';
 
 interface IMovieModal {
     clickedContent: IContent;
@@ -23,9 +24,8 @@ function MovieModal({ clickedContent, content, keyName, scrollY }: IMovieModal){
   const history = useHistory();
   const getRoot = useRecoilValue(rootRecoil);
   const onOverlayClick = () => history.push(getRoot[content]);
-  console.log(getRoot[content]);
   const contentId = clickedContent.id ;
-  const { data } = useQuery<IGetMovieDetails>(
+  const { data , isLoading } = useQuery<IGetMovieDetails>(
     { queryKey: [content, contentId], queryFn:
     () => getDetails(content,String(contentId))}
 );
@@ -42,7 +42,7 @@ function MovieModal({ clickedContent, content, keyName, scrollY }: IMovieModal){
                 style ={{ top: scrollY + 150 }}
                 layoutId={contentId + "_" +  keyName}
               >
-                  {clickedContent &&
+                  {clickedContent && !isLoading && 
                   <>
                   <BigCover 
                   style={{
@@ -54,7 +54,7 @@ function MovieModal({ clickedContent, content, keyName, scrollY }: IMovieModal){
                   <BigOverview>
                   <Vote><FaStar /> Rated : {data?.vote_average.toFixed(2)}</Vote>
                   <DetailInfo> Release Date : {clickedContent?.release_date}</DetailInfo>
-                  <DetailInfo> Run Time : {data?.runtime}</DetailInfo>
+                  <DetailInfo> <MdOutlineTimer style={{transform:"translateY(3px)"}}/> Run Time : {data?.runtime}</DetailInfo>
                     <OverviewContents>{clickedContent.overview}</OverviewContents>
                     </BigOverview>
                   </>}

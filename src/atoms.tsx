@@ -55,6 +55,16 @@ export const moviesRecoil = atom<ISlider[]>({
         },
     ],
 });
+export const searchRecoil = atom({
+    key: "search",
+    default: [
+        {   
+            content:"movie",
+        },{
+            content:"tv",
+        },
+    ],
+});
 interface IRoot {
     [key: string] : string;
 }

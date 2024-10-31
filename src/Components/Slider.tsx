@@ -43,10 +43,10 @@ function Slider({keyContent, keyName, slideTitle, hasBanner}:ISlide){
         //post_path가 없는 경우는 슬라이드 생성이 되지 않으니 뺌
         const contentFilter = (view : IContent) => {
             
-            if(view.backdrop_path != null || view.poster_path != null ) {
-                if(view.origin_country && view.original_language == "sp" ) {
+            if(view.backdrop_path == null || view.poster_path == null ) {
+                // if(view.origin_country && view.original_language == "sp" ) {
                     return false;
-                }
+                //}
             }
 
             return view;

@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import { theme } from '../theme';
 
 export const SlideWrapper = styled.div`
-   position: relative;
+  position: relative;
   width: 100%;
   height: 280px;
   background-color: black;
@@ -18,9 +18,10 @@ export const SliderTitle = styled.p`
 `;
 
 export const Slide = styled.div`
-  position: relative;
+  position: absolute;
   width: 90%;
   top: 45px;
+  height: auto;
   left: 5%;  
 `;
 
@@ -50,6 +51,8 @@ export const rowVariants={
 };
 
 export const Box = styled(motion.div)<{$bgphoto:string}>`
+  position: relative;
+  width:100%;
   height: 200px;
   font-size:66px;
   background-color: transparent;

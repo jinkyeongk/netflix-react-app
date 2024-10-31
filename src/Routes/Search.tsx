@@ -1,21 +1,25 @@
-import { styled } from 'styled-components';
-import { Wrapper } from '../styles/CommonStyle';
+import {  Title, Wrapper } from '../styles/CommonStyle';
+import SearchedSlider from '../Components/SearchedSlider';
+import { useLocation } from 'react-router';
+import { useRecoilValue } from 'recoil';
+import { searchRecoil } from '../atoms';
 
-const SearchWrapper = styled.div`
-   position: relative;
-   top: 200px;
-`;
+
+
 function Search() {
-  // const location = useLocation();
-  // const keyword = new URLSearchParams(location.search).get("keyword");
+   const location = useLocation();
+   const keyword = new URLSearchParams(location.search).get("keyword");
+   const getResults = useRecoilValue(searchRecoil);
 
 
   return (<>
       <Wrapper>
-        <SearchWrapper>
-            
-            </SearchWrapper>
-           
+        <Title>Searched "{keyword}" </Title>
+        {getResults.map((search,index) => (
+          <SearchedSlider key={index} content = {search.content} keyword ={keyword || "" }></SearchedSlider>  
+        ))}
+          
+         
       </Wrapper>
     </>
    );
