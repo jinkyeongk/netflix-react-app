@@ -3,7 +3,7 @@ import { makeImagePath } from '../utils';
 import {  TimesSvg } from '../svg';
 import { useHistory } from 'react-router';
 import { getDetails, IContent } from '../api';
-import { BigCover, BigMovie, BigOverview, BigTitle, CloseButton, DetailInfo, Overlay, OverviewContents, Svg, Vote } from '../styles/ModalStyle';
+import { BigCover, BigMovie, BigOverview, BigTitle, CloseButton, DetailInfo, GenresInfo, Overlay, OverviewContents, Svg, Vote } from '../styles/ModalStyle';
 import { useRecoilValue } from 'recoil';
 import { IGetMovieDetails, rootRecoil } from '../atoms';
 import { useQuery } from '@tanstack/react-query';
@@ -52,11 +52,13 @@ function MovieModal({ clickedContent, content, keyName, scrollY }: IMovieModal){
                   />
                   <BigTitle>{clickedContent.title?clickedContent.title : clickedContent.name}</BigTitle>
                   <BigOverview>
-                  <Vote><FaStar /> Rated : {data?.vote_average.toFixed(2)}</Vote>
-                  <DetailInfo> Release Date : {clickedContent?.release_date}</DetailInfo>
-                  <DetailInfo> <MdOutlineTimer style={{transform:"translateY(3px)"}}/> Run Time : {data?.runtime}</DetailInfo>
+                    <Vote><FaStar /> Rated : {data?.vote_average.toFixed(2)}</Vote>
+                    <DetailInfo> Release Date : {clickedContent?.release_date} <MdOutlineTimer style={{transform:"translateY(3px)"}}/> Run Time : {data?.runtime} min</DetailInfo>
+                    <DetailInfo>  {data?.genres?.map((genres => (
+                        <GenresInfo>{genres.name} </GenresInfo>
+                      )))}  </DetailInfo>
                     <OverviewContents>{clickedContent.overview}</OverviewContents>
-                    </BigOverview>
+                  </BigOverview>
                   </>}
                   <CloseButton onClick={onOverlayClick}>
                       <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">

@@ -55,6 +55,18 @@ export const OverviewContents = styled.div`
   display: block;
   color:${theme.white.lighter};
   text-align: left;
+  border-top: double 1px gray;
+  padding-top: 5px;
+  margin-top: 10px;
+`;
+
+export const GenresInfo = styled.button`
+  border: none;
+  border-radius: 5px;
+  background-color: darkgoldenrod;
+  color: ${theme.white.lighter};
+  cursor: default;
+  margin-right: 3px;
 `;
 export const Vote = styled.div`
     display: block;
@@ -65,7 +77,7 @@ export const Vote = styled.div`
 `;
 
 export const DetailInfo = styled.div`
-    display: inline-block;
+    display: block;
     height: 20px;
     font-size: 18px;
     color: lightgray;

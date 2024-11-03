@@ -7,7 +7,7 @@ import { useRecoilValue } from 'recoil';
 import { IGetDetails, rootRecoil } from '../atoms';
 import { useQuery } from '@tanstack/react-query';
 import { FaStar } from "react-icons/fa6";
-import { BigCover, BigMovie, BigOverview, BigTitle, CloseButton, DetailInfo, Overlay, OverviewContents, Svg, Vote } from '../styles/ModalStyle';
+import { BigCover, BigMovie, BigOverview, BigTitle, CloseButton, DetailInfo, GenresInfo, Overlay, OverviewContents, Svg, Vote } from '../styles/ModalStyle';
 
 interface ITvShowModal {
     clickedContent: IContent;
@@ -51,7 +51,11 @@ function TvShowModal({ clickedContent, content,keyName, scrollY }: ITvShowModal)
                     <BigTitle>{clickedContent.title?clickedContent.title : clickedContent.name}</BigTitle>
                     <BigOverview>
                     <Vote><FaStar /> Rated : {data?.vote_average.toFixed(2)}</Vote>
-                    <DetailInfo>  {data?.number_of_seasons} Seasons</DetailInfo>
+                    <DetailInfo>  {data?.number_of_seasons} Seasons / {data?.number_of_episodes} episodes </DetailInfo>
+                    <DetailInfo>  First air date : {data?.first_air_date}  </DetailInfo>
+                    <DetailInfo>  {data?.genres?.map((genres => (
+                        <GenresInfo>{genres.name} </GenresInfo>
+                      )))}  </DetailInfo>
                       <OverviewContents>{clickedContent.overview}</OverviewContents>
                       </BigOverview>
                     </>}
