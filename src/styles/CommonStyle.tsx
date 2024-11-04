@@ -9,10 +9,15 @@ export const Wrapper = styled.div`
 `;
 
 export const Loader = styled.div`
-  display: flex;
-  height:20vh;
+  margin: 300px;
+  font-size: 35px;
   justify-content: center;
   text-align: center;
+  animation: spin 1s linear infinite;
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
 `;
 
 export const Title = styled.div`
@@ -23,3 +28,4 @@ export const Title = styled.div`
   text-align: center;
 
 `;
+

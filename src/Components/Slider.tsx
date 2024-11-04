@@ -10,6 +10,7 @@ import Banner from './Banner';
 import { Loader } from '../styles/CommonStyle';
 import TvShowModal from './TvShowModal';
 import MovieModal from './MovieModal';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 
 
@@ -105,7 +106,7 @@ function Slider({keyContent, keyName, slideTitle, hasBanner}:ISlide){
     return (
         <>
         {isLoading  ? ( 
-          <Loader>Loading...</Loader> 
+          <Loader><AiOutlineLoading3Quarters /></Loader> 
         ) : ( <>
             {hasBanner && <Banner Bannerdata={BannerContent as IContent} content={keyContent} keyName={keyName}/> }
         <SlideWrapper>

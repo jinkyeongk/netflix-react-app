@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Loader } from '../styles/CommonStyle';
 import { FaCaretRight } from 'react-icons/fa6';
 import { Box, conInfoVariants, ContentsInfo, Row, SearchedTitle, SliderContainer } from '../styles/SearchedSliderStyle';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 
 interface ISearchedData{
@@ -48,7 +49,7 @@ function SearchedSlider({content,keyword}:ISearchedData){
   
     return (<> 
         {isLoading ? (
-        <Loader> Loading ... </Loader>
+        <Loader> <AiOutlineLoading3Quarters /> </Loader>
     ) : (<>
         <SliderContainer >
             <SearchedTitle><FaCaretRight /> Results For {content}</SearchedTitle>
