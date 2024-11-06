@@ -19,7 +19,7 @@ interface ITvShowModal {
 
 function TvShowModal({ clickedContent, content,keyName, scrollY }: ITvShowModal){
     
-    const history = useHistory();
+  const history = useHistory();
     const getRoot = useRecoilValue(rootRecoil);
     const onOverlayClick = () => history.push(getRoot[content]);
     const contentId = clickedContent.id ;
@@ -54,7 +54,7 @@ function TvShowModal({ clickedContent, content,keyName, scrollY }: ITvShowModal)
                     <DetailInfo>  {data?.number_of_seasons} Seasons / {data?.number_of_episodes} episodes </DetailInfo>
                     <DetailInfo>  First air date : {data?.first_air_date}  </DetailInfo>
                     <DetailInfo>  {data?.genres?.map((genres => (
-                        <GenresInfo>{genres.name} </GenresInfo>
+                        <GenresInfo  key={genres.id} > {genres.name} </GenresInfo>
                       )))}  </DetailInfo>
                       <OverviewContents>{clickedContent.overview}</OverviewContents>
                       </BigOverview>

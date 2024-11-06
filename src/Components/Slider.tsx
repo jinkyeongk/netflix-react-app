@@ -78,7 +78,8 @@ function Slider({keyContent, keyName, slideTitle, hasBanner}:ISlide){
       const clickedContent = 
       bigContentMatch?.params.contentId && 
       data?.results.find((keyContent: { id: number; }) => keyContent.id === +bigContentMatch?.params.contentId) as IContent;
-  
+    
+
       
     const setPagination = (nextBtn:boolean) => {
         if(nextBtn) {
@@ -158,7 +159,7 @@ function Slider({keyContent, keyName, slideTitle, hasBanner}:ISlide){
         {bigContentMatch ? (keyContent == 'tv' ? (
             <TvShowModal clickedContent={clickedContent as IContent} content={keyContent}  keyName ={keyName} scrollY={scrollY.get()} />
         ) :(
-            <MovieModal clickedContent={clickedContent as IContent} content={keyContent}  keyName ={keyName} scrollY={scrollY.get()} />
+            <MovieModal  clickedContent={clickedContent as IContent} content={keyContent}  keyName ={keyName} scrollY={scrollY.get()} />
         ) )
         :null }
     

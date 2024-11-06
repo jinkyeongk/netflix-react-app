@@ -44,7 +44,7 @@ export const BigTitle = styled.h3`
   font-size: 46px;
 `;
 
-export const BigOverview = styled.p`
+export const BigOverview = styled.div`
   position: relative;
   top:-100px;
   padding:20px;

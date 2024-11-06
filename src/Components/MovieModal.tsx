@@ -55,7 +55,7 @@ function MovieModal({ clickedContent, content, keyName, scrollY }: IMovieModal){
                     <Vote><FaStar /> Rated : {data?.vote_average.toFixed(2)}</Vote>
                     <DetailInfo> Release Date : {clickedContent?.release_date} <MdOutlineTimer style={{transform:"translateY(3px)"}}/> Run Time : {data?.runtime} min</DetailInfo>
                     <DetailInfo>  {data?.genres?.map((genres => (
-                        <GenresInfo>{genres.name} </GenresInfo>
+                        <GenresInfo key={genres.id} >{genres.name} </GenresInfo>
                       )))}  </DetailInfo>
                     <OverviewContents>{clickedContent.overview}</OverviewContents>
                   </BigOverview>
