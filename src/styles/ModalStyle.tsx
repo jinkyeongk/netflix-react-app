@@ -26,7 +26,7 @@ export const BigMovie = styled(motion.div)`
   background-color: ${theme.black.lighter};
 `;
 
-export const BigCover = styled.div`
+export const BigCover = styled(motion.div)`
   width: 100%;
   height: 400px;
   border-top-left-radius:10px;

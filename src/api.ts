@@ -30,6 +30,23 @@ export interface IGetContentResult{
   total_results:number;
 }
 
+
+export interface IVideoContents{
+    iso_639_1:string;
+    iso_3166_1:string;
+    name:string;
+    key:string;
+    site:string;
+    size:string;
+    type:string;
+    official: boolean;
+    published_at:string;
+}
+export interface IGetVideos{
+
+  id:string;
+  results:IVideoContents[];
+}
 const options = {
     method: 'GET',
     headers: {
@@ -56,5 +73,11 @@ export function searchEngine(content:string, keyword:string){
 export function getDetails(content:string,id:string){
   return fetch(`${BASE_PATH}/${content}/${id}?language=en-US&page=1`,options)
       .then((response) => response.json()
+  );
+}
+
+export function getVideos(content:string,id:string){
+  return fetch(`${BASE_PATH}/${content}/${id}/videos?language=en-US`, options)
+  .then((response) => response.json()
   );
 }
