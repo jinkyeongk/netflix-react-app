@@ -29,3 +29,11 @@ export const Title = styled.div`
 
 `;
 
+export const NoContentsArea = styled.div`
+  position: relative;
+  width: 90%;
+  top: 45px;
+  height: 260px;
+  font-size: 25px;
+  text-align: center;
+`;

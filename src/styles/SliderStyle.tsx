@@ -26,7 +26,6 @@ export const Slide = styled.div`
 `;
 
 export const Row = styled(motion.div)`
-    position: absolute;
     display: grid;
     width: 100%;
     grid-template-columns: repeat(6, 1fr);
@@ -51,7 +50,6 @@ export const rowVariants={
 };
 
 export const Box = styled(motion.div)<{$bgphoto:string}>`
-  position: relative;
   width:100%;
   height: 200px;
   font-size:66px;

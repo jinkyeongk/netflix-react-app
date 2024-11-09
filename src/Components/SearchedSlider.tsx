@@ -2,7 +2,7 @@ import { AnimatePresence } from 'framer-motion';
 import { IContent, IGetContentResult, searchEngine } from '../api';
 import { makeImagePath } from '../utils';
 import { useQuery } from '@tanstack/react-query';
-import { Loader } from '../styles/CommonStyle';
+import { Loader, NoContentsArea } from '../styles/CommonStyle';
 import { FaCaretRight } from 'react-icons/fa6';
 import { Box, conInfoVariants, ContentsInfo, Row, SearchedTitle, SliderContainer } from '../styles/SearchedSliderStyle';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
@@ -54,6 +54,8 @@ function SearchedSlider({content,keyword}:ISearchedData){
         <SliderContainer >
             <SearchedTitle><FaCaretRight /> Results For {content}</SearchedTitle>
                 <AnimatePresence initial={false} >
+                    { slideContents.length == 0 ? 
+                    <NoContentsArea> There is no Contents .</NoContentsArea> :
                     <Row 
                         initial="hidden"
                         animate="visible"
@@ -79,6 +81,7 @@ function SearchedSlider({content,keyword}:ISearchedData){
                             </Box>
                         ))}
                         </Row>
+                        }
                     </AnimatePresence>
             </SliderContainer>
         </>)}
