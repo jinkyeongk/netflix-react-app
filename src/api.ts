@@ -81,3 +81,9 @@ export function getVideos(content:string,id:string){
   .then((response) => response.json()
   );
 }
+
+export function getSimilarContents(content:string,id:string){
+  return fetch(`${BASE_PATH}/${content}/${id}/similar?language=en-US&page=1`, options)
+  .then((response) => response.json()
+  );
+}

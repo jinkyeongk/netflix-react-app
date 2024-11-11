@@ -11,6 +11,7 @@ import { AnimatePresence } from 'framer-motion';
 import { FaStar } from 'react-icons/fa6';
 import { MdOutlineTimer } from 'react-icons/md';
 import { useState } from 'react';
+import SimilarList from './SimilarList';
 
 interface IMovieModal {
     clickedContent: IContent;
@@ -102,6 +103,7 @@ if(!videoLoading && videoContent.length >0){
                         <GenresInfo key={genres.id} >{genres.name} </GenresInfo>
                       )))}  </DetailInfo>
                     <OverviewContents>{clickedContent.overview}</OverviewContents>
+                    <SimilarList content={content} id ={contentId} key={contentId} ></SimilarList>
                   </BigOverview>
                   </>}
                   <CloseButton onClick={onOverlayClick}>

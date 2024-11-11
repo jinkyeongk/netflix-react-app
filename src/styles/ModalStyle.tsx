@@ -24,6 +24,7 @@ export const BigMovie = styled(motion.div)`
   min-height: 80vh;
   z-index: 100;
   background-color: ${theme.black.lighter};
+  overflow-y: scroll;
 `;
 
 export const BigCover = styled(motion.div)`

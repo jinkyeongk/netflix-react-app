@@ -18,7 +18,7 @@ export const SliderTitle = styled.p`
 `;
 
 export const Slide = styled.div`
-  position: absolute;
+  position: relative;
   width: 90%;
   top: 45px;
   height: auto;
@@ -27,6 +27,7 @@ export const Slide = styled.div`
 
 export const Row = styled(motion.div)`
     display: grid;
+    position: absolute;
     width: 100%;
     grid-template-columns: repeat(6, 1fr);
     gap: 5px;
@@ -110,13 +111,14 @@ export const infoVariants={
 };
 export const SliderControl = styled.div`
     position: relative;
+    width: 100%;
 `;
 export const SliderBtn = styled.button`
+    position: absolute;
+    top: 0; 
     border: none;
     background-color: transparent;
     cursor: pointer;
-    position: absolute;
-    top: 0; 
   
 `;
 export const PrevBtn = styled(SliderBtn)`
