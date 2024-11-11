@@ -57,6 +57,17 @@ table {
 * {
   box-sizing: border-box;
 }
+::-webkit-scrollbar-track {
+  /*background: #404040  스크롤바 트랙(배경) 색상 */
+  /* border-radius: 5px; 트랙의 둥근 모서리 */
+}
+::-webkit-scrollbar {
+  width: 0; /* 스크롤바 너비 */
+}
+::-webkit-scrollbar-thumb {
+   /* background: #353535;스크롤바 손잡이 색상 */
+  /*border-radius: 5;  손잡이의 둥근 모서리 */
+}
 body {
   font-weight: 400;
   /* font-family: "Open Sans", sans-serif; */
