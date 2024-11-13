@@ -8,6 +8,7 @@ import { IGetDetails, rootRecoil } from '../atoms';
 import { useQuery } from '@tanstack/react-query';
 import { FaStar } from "react-icons/fa6";
 import { BigCover, BigMovie, BigOverview, BigTitle, CloseButton, DetailInfo, GenresInfo, Overlay, OverviewContents, Svg, Vote } from '../styles/ModalStyle';
+import SimilarList from './SimilarList';
 
 interface ITvShowModal {
     clickedContent: IContent;
@@ -57,6 +58,7 @@ function TvShowModal({ clickedContent, content,keyName, scrollY }: ITvShowModal)
                         <GenresInfo  key={genres.id} > {genres.name} </GenresInfo>
                       )))}  </DetailInfo>
                       <OverviewContents>{clickedContent.overview}</OverviewContents>
+                      <SimilarList content={content} id ={contentId} key={contentId} ></SimilarList>
                       </BigOverview>
                     </>}
                     <CloseButton onClick={onOverlayClick}>
