@@ -5,6 +5,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "test": "tsc -b && vite test",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
