@@ -12,7 +12,6 @@ import { FaStar } from 'react-icons/fa6';
 import { MdOutlineTimer } from 'react-icons/md';
 import { useState } from 'react';
 import SimilarList from './SimilarList';
-
 interface IMovieModal {
     clickedContent: IContent;
     content:string;
@@ -89,7 +88,7 @@ if(!videoLoading && videoContent.length >0){
                   <BigCover 
                   style={{
                       backgroundImage: `linear-gradient(to top,black,transparent),
-                      URL(${makeImagePath(clickedContent?.backdrop_path)})` 
+                      URL(${makeImagePath(clickedContent?.backdrop_path, "w500")})` 
                       ,}}
                   /> )}
                   <BigTitle style={{opacity:isHovered?'0':'1',transition: "opacity 0.5s ease"}}
@@ -103,7 +102,7 @@ if(!videoLoading && videoContent.length >0){
                         <GenresInfo key={genres.id} >{genres.name} </GenresInfo>
                       )))}  </DetailInfo>
                     <OverviewContents>{clickedContent.overview}</OverviewContents>
-                    <SimilarList content={content} id ={contentId} key={contentId} ></SimilarList>
+                    {/* { <SimilarList content={content} id ={contentId} key={contentId+"_similarList"} ></SimilarList> } */}
                   </BigOverview>
                   </>}
                   <CloseButton onClick={onOverlayClick}>
