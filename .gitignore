@@ -26,3 +26,6 @@ dist-ssr
 # User 
 .env
 .github
+node_modules/
+eslint.config.json
+*.config.js
