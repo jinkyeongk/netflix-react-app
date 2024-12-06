@@ -1,47 +1,25 @@
 import { useQuery } from '@tanstack/react-query';
 import { getSimilarContents, IContent, IGetContentResult } from '../api';
-import { styled } from 'styled-components';
-import { motion } from 'framer-motion';
 import { makeImagePath } from '../utils';
+import { Loader } from '../styles/CommonStyle';
+import { Box, Info, SimilarContents, SimilarLists } from '../styles/SimilarListStyle';
 
 interface IGetSimilarList {
     content:string;
     id:number;
-
 };
 
-export const SimilarLists = styled.div`
-     position: relative;
-    top: 0;
-    justify-content: space-between;
-`;
-export const Box = styled(motion.div)<{$bgphoto:string}>`
-  position: relative;
-  width:100%;
-  height: 150px;
-  font-size:30px;
-  background-color: transparent;
-  background-image:url(${(props) => props.$bgphoto}) ; 
-  background-size: cover;
-  background-position: center center;
 
-  
-`;
-
-export const SimilarContents = styled(motion.div)`
-    margin-top: 5px;
-    display: grid;
-    gap: 5px;
-    width: 100%;
-    grid-template-columns: repeat(3, 1fr);
-`;
+function SimilarList ({id , content}:IGetSimilarList){
 
 
-function SimilarList ({content , id}:IGetSimilarList){
     const {data,isLoading} = useQuery<IGetContentResult> (
-        { queryKey: [content, "videos"], queryFn:
-        () => getSimilarContents(content,String(id))}
-    );
+        { queryKey: [content, "similar",id], queryFn:
+            () =>  getSimilarContents(content,String(id)),
+        staleTime: 1000 * 60 * 5, // 5분 동안 데이터를 '신선'하다고 간주
+        gcTime: 1000 * 60 * 30,   // 30분 (이전의 cacheTime)
+        refetchOnWindowFocus: false,
+      });
 
     let similarContents= data?.results as IContent[];
   
@@ -56,10 +34,15 @@ function SimilarList ({content , id}:IGetSimilarList){
     if(!isLoading) {
         similarContents = similarContents?.filter(contentFilter) as IContent[];
     }
-  console.log(similarContents);
 return(
     <>
-    {Number(data?.results.length) > 0 && !isLoading ?
+    {isLoading?(
+        <Loader>
+        <div>
+            <div></div><div></div>
+        </div>
+        </Loader>
+    ):(similarContents.length>0?
         (<SimilarLists> 〉 Similar Contents Recommended
         <SimilarContents 
             initial="hidden"
@@ -72,22 +55,21 @@ return(
             .slice(0,6)
             .map((data)=>(
                 <Box 
-                layoutId={data.id + "_" +content}
                 key={data.id + content}
-                whileHover="hover"
+                whileHover="normal"
                 initial="normal"
-                transition={{type: "tween"}}
+                transition={{type: "linear"}}
                 //onClick={() => onBoxClicked(data.id )}
-                $bgphoto={makeImagePath(data.backdrop_path, "w500")} >
-                    <span >
-                        {/* <h4>{data.title ?data.title: data.name}</h4> */}
-                    </span>
+                $bgphoto={makeImagePath(data.poster_path, "w300")} >
+                    <Info >
+                        { <h4>{data.title ?data.title: data.name}</h4> }
+                    </Info>
                 </Box>
             ))}
             </SimilarContents>
             </SimilarLists>
         )
-        :null
+        :null)
     }
         
         
