@@ -12,6 +12,7 @@ import { FaStar } from 'react-icons/fa6';
 import { MdOutlineTimer } from 'react-icons/md';
 import { useState } from 'react';
 import SimilarList from './SimilarList';
+import CreditList from './CreditList';
 interface IMovieModal {
     clickedContent: IContent;
     content:string;
@@ -102,7 +103,8 @@ if(!videoLoading && videoContent.length >0){
                         <GenresInfo key={genres.id} >{genres.name} </GenresInfo>
                       )))}  </DetailInfo>
                     <OverviewContents>{clickedContent.overview}</OverviewContents>
-                    {/* { <SimilarList content={content} id ={contentId} key={contentId+"_similarList"} ></SimilarList> } */}
+                     <SimilarList content={content} id ={contentId} key={contentId+"_similarList"} ></SimilarList> 
+                     <CreditList id={contentId} content={content} />
                   </BigOverview>
                   </>}
                   <CloseButton onClick={onOverlayClick}>

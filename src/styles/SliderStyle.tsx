@@ -51,6 +51,7 @@ export const rowVariants={
 };
 
 export const Box = styled(motion.div)<{$bgphoto:string}>`
+  position: relative;
   width:100%;
   height: 200px;
   font-size:66px;
@@ -76,8 +77,8 @@ export const boxVariants={
     scale : 1.2,
     y : -50,
     transition:{
-      delay:0.2,
-      duration:0.1,
+      delay:2,
+      duration:2,
       type:"tween"
 
     }
