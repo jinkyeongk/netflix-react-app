@@ -87,3 +87,9 @@ export function getSimilarContents(content:string,id:string){
   .then((response) => response.json()
   );
 }
+
+export function getCredits(id: number, content: string) {
+  return fetch(`${BASE_PATH}/${content}/${id}/credits?anguage=en-US&page=1`, options)
+    .then((response) => response.json()
+  );
+}

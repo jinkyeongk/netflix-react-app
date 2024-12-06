@@ -143,3 +143,15 @@ export interface IGetMovieDetails{
     adult: boolean;
     vote_average: number;
 }
+interface ICredit {
+    id: number;
+    known_for_department: string;
+    name: string;
+    profile_path: string;
+    character: string;
+    order: number;
+}
+export interface ICredits {
+    id: number;
+    cast: ICredit[];
+}
