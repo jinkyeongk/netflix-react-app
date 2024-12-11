@@ -71,3 +71,18 @@ export const conInfoVariants={
       }
     }
   };
+  export const boxVariants2={
+    normal:{
+      scale : 1,
+    },
+    hover: {
+      scale : 1.2,
+      y : -50,
+      transition:{
+        delay:0.2,
+        duration:0.1,
+        type:"tween"
+  
+      }
+    }
+  };

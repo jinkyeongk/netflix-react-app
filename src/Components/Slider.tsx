@@ -36,7 +36,8 @@ function Slider({keyContent, keyName, slideTitle, hasBanner}:ISlide){
         history.push(`/${keyContent}/${keyName}/${contentId}`);
     };
 
-    const { data  ,isLoading } = useQuery<IGetContentResult>({ queryKey: [keyContent, keyName], queryFn: () => getContents(keyContent, keyName) });
+    const { data  ,isLoading } = useQuery<IGetContentResult>({ queryKey: [keyContent, keyName]
+        , queryFn: () => getContents(keyContent, keyName) });
 
   
     

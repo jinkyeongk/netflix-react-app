@@ -11,7 +11,6 @@ function Search() {
    const keyword = new URLSearchParams(location.search).get("keyword");
    const getResults = useRecoilValue(searchRecoil);
 
-
   return (<>
       <Wrapper>
         <Title>Searched "{keyword}" </Title>

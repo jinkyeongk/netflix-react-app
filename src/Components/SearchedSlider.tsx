@@ -1,35 +1,24 @@
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, useScroll } from 'framer-motion';
 import { IContent, IGetContentResult, searchEngine } from '../api';
 import { makeImagePath } from '../utils';
 import { useQuery } from '@tanstack/react-query';
 import { Loader, NoContentsArea } from '../styles/CommonStyle';
 import { FaCaretRight } from 'react-icons/fa6';
-import { Box, conInfoVariants, ContentsInfo, Row, SearchedTitle, SliderContainer } from '../styles/SearchedSliderStyle';
+import { Box, boxVariants2, conInfoVariants, ContentsInfo, Row, SearchedTitle, SliderContainer } from '../styles/SearchedSliderStyle';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { useHistory, useLocation } from 'react-router';
+import SearchedCotentModal from './SearchedContentModal';
 
 
 interface ISearchedData{
     content:string;
     keyword:string;
 }
-export const boxVariants2={
-    normal:{
-      scale : 1,
-    },
-    hover: {
-      scale : 1.2,
-      y : -50,
-      transition:{
-        delay:0.2,
-        duration:0.1,
-        type:"tween"
-  
-      }
-    }
-  };
 
 
 function SearchedSlider({content,keyword}:ISearchedData){
+    const history = useHistory();
+    const {scrollY} = useScroll();
     const { data, isLoading } = useQuery<IGetContentResult>(
         { queryKey: [content, keyword], queryFn:
             () => searchEngine(content,keyword)}
@@ -37,12 +26,25 @@ function SearchedSlider({content,keyword}:ISearchedData){
     let slideContents = data?.results as IContent[];
     const contentFilter = (view : IContent) => {
 
-        if(view.backdrop_path == null || view.poster_path == null ) {
+        if(view.backdrop_path == null && view.profile_path == null ) {
             return false;
         }
         return view;
     };
-  
+    
+   
+    // useRouteMatch 대신 useLocation을 사용하여 쿼리 파라미터 처리
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const contentId = searchParams.get('contentId');
+    const onBoxClicked = (contentId: number) => {
+        history.replace(`/search?keyword=${keyword}&contentId=${contentId}`);
+    };
+    
+    const clickedContent = 
+    contentId && 
+    data?.results.find((keyContent) => keyContent.id === +contentId) as IContent;
+
     if(!isLoading) {
         slideContents = slideContents?.filter(contentFilter) as IContent[];
     }
@@ -73,8 +75,9 @@ function SearchedSlider({content,keyword}:ISearchedData){
                             whileHover="hover"
                             initial="normal"
                             transition={{type: "tween"}}
-                            //onClick={() => onBoxClicked(data.id )}
-                            $bgphoto={makeImagePath(data.backdrop_path, "w500")} >
+                            onClick={() => onBoxClicked(data.id )}                        
+                            style={{ cursor: data.profile_path ? 'default' : 'pointer' }}
+                            $bgphoto={makeImagePath((data.backdrop_path ?? data.profile_path ?? "").toString(), "w500")} >
                                 <ContentsInfo variants={conInfoVariants} >
                                     <h4>{data.title ?data.title: data.name}</h4>
                                 </ContentsInfo>
@@ -85,6 +88,14 @@ function SearchedSlider({content,keyword}:ISearchedData){
                     </AnimatePresence>
             </SliderContainer>
         </>)}
+        {clickedContent ?  <SearchedCotentModal  clickedContent={clickedContent as IContent} content={content}  keyName ={keyword} scrollY={scrollY.get()} />  : null}
+        {/* {bigContentMatch ? (content == 'tv' ? (
+            <TvShowModal clickedContent={clickedContent as IContent} content={keyword}  keyName ={content} scrollY={scrollY.get()} />
+        ) :(
+            <MovieModal  clickedContent={clickedContent as IContent} content={keyword}  keyName ={content} scrollY={scrollY.get()} />
+        ) )
+        :null } */}
+        
     </>);
 }
 
