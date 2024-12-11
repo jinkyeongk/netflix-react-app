@@ -4,7 +4,6 @@ import { theme } from '../theme';
 
 export const SlideWrapper = styled.div`
   position: relative;
-  width: 100%;
   height: 280px;
   background-color: black;
 `;
@@ -51,7 +50,7 @@ export const rowVariants={
 };
 
 export const Box = styled(motion.div)<{$bgphoto:string}>`
-  position: relative;
+  
   width:100%;
   height: 200px;
   font-size:66px;
@@ -77,8 +76,8 @@ export const boxVariants={
     scale : 1.2,
     y : -50,
     transition:{
-      delay:2,
-      duration:2,
+      delay:0.1,
+      duration:0.8,
       type:"tween"
 
     }
@@ -87,7 +86,7 @@ export const boxVariants={
 
 export const Info = styled(motion.div)`
   position: absolute;
-  bottom: 0px;
+  bottom: 0%;
   width: 100%;
   padding: 5px;
   background-color: ${theme.black.lighter};
@@ -104,7 +103,7 @@ export const infoVariants={
     opacity:0.8,
     transition:{
       delay:0.2,
-      duration:0.1,
+      duration:0.5,
       type:"tween"
 
     }

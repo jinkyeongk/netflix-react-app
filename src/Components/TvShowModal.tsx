@@ -59,8 +59,8 @@ function TvShowModal({ clickedContent, content,keyName, scrollY }: ITvShowModal)
                         <GenresInfo  key={genres.id} > {genres.name} </GenresInfo>
                       )))}  </DetailInfo>
                       <OverviewContents>{clickedContent.overview}</OverviewContents>
-                       { <SimilarList content={content} id ={contentId} key={contentId} ></SimilarList>  }
-                       <CreditList id={contentId} content={content} />
+                      <CreditList id={contentId} content={content} />
+                      <SimilarList content={content} id ={contentId} key={contentId} ></SimilarList>  
                       </BigOverview>
                     </>}
                     <CloseButton onClick={onOverlayClick}>
