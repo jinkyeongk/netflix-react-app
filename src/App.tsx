@@ -3,6 +3,7 @@ import Header from "./Components/Header";
 import Home from "./Routes/Home";
 import Tv from "./Routes/Tv";
 import Search from "./Routes/Search";
+import Trending from './Routes/Trending';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RecoilRoot } from 'recoil';
 
@@ -27,6 +28,9 @@ function App() {
       <Switch>
         <Route path="/tv" >
           <Tv/>
+        </Route>
+        <Route path="/trending" >
+          <Trending/>
         </Route>
         <Route path="/search">
           <Search/>

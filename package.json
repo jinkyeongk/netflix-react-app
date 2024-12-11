@@ -1,13 +1,12 @@
 {
   "name": "netflix-react-app",
-  "homepage": "https://jinkyeongk.github.io/netflix-react-app/",
+  "homepage": "https://jinkyeongk.github.io/netflix-react-app",
   "private": true,
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },

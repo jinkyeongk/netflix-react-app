@@ -14,7 +14,7 @@ export default defineConfig({
       '@': '/src',
     },
   },
-  base: '/', //  리포지토리 이름
+  base: '/netflix-react-app/', //  리포지토리 이름
 
   server: {
     open: true, // 개발 서버 실행 시 자동으로 브라우저를 엽니다.
