@@ -34,7 +34,7 @@ export const Info = styled(motion.div)`
   padding: 5px;
   background-color: ${theme.black.lighter};
   color: white;
-  opacity:0.7;
+  opacity:0.9;
   h4{
     text-align: center;
     font-size: 12px;
