@@ -13,7 +13,7 @@ function Trending(){
         <Wrapper>
           <>
             {getTrendings.map((trendings,index) => (
-              <TrendingContentSlider key={trendings.keyValue+"+"+trendings.time} keyContent={trendings.content} keyName={trendings.keyValue} timing={trendings.time} slideTitle={trendings.title} hasBanner={index == 0 ? true : false} ></TrendingContentSlider>
+              <TrendingContentSlider key={trendings.content+"+"+trendings.time} keyContent={trendings.content} keyName={trendings.keyValue} timing={trendings.time} slideTitle={trendings.title} hasBanner={index == 0 ? true : false} ></TrendingContentSlider>
             ))}
           </>
        </Wrapper>

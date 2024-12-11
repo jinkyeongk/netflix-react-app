@@ -8,8 +8,6 @@ import { AngleLeftSvg, AngleRightSvg } from '../svg';
 import { useQuery } from '@tanstack/react-query';
 import Banner from './Banner';
 import { Loader } from '../styles/CommonStyle';
-import TvShowModal from './TvShowModal';
-import MovieModal from './MovieModal';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import TrendingModal from './TrendingModal';
 
@@ -106,7 +104,7 @@ function TrendingContentSlider({keyContent, keyName,timing ,slideTitle, hasBanne
         {isLoading  ? ( 
           <Loader><AiOutlineLoading3Quarters /></Loader> 
         ) : ( <>
-            {hasBanner && <Banner Bannerdata={BannerContent as IContent} content={keyContent} keyName={keyName}/> }
+            {hasBanner && <Banner Bannerdata={BannerContent as IContent} content={keyName} keyName={keyContent}/> }
         <SlideWrapper>
             <SliderTitle>{slideTitle}</SliderTitle>
             <Slide>           
@@ -153,12 +151,10 @@ function TrendingContentSlider({keyContent, keyName,timing ,slideTitle, hasBanne
         </SlideWrapper>
         </>
      )}
-        {bigContentMatch ? (keyContent == 'tv' ? (
+        {bigContentMatch && 
             <TrendingModal clickedContent={clickedContent as IContent} keyValue ={keyName}  content={keyContent} keyName ={timing} scrollY={scrollY.get()} />
-        ) :(
-            <TrendingModal  clickedContent={clickedContent as IContent}  keyValue ={keyName} content={keyContent}  keyName ={timing} scrollY={scrollY.get()} />
-        ) )
-        :null }
+
+        }
     
     </>);
 };
