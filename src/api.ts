@@ -12,6 +12,8 @@ export interface IContent {
   release_date?: string;
   origin_country?: string[]; 
   original_language?:string;
+  known_for_department?:string;
+  profile_path?:string;
 }
 export interface IGetContentsResult {
   page : number;
@@ -43,7 +45,6 @@ export interface IVideoContents{
     published_at:string;
 }
 export interface IGetVideos{
-
   id:string;
   results:IVideoContents[];
 }
@@ -91,5 +92,10 @@ export function getSimilarContents(content:string,id:string){
 export function getCredits(id: number, content: string) {
   return fetch(`${BASE_PATH}/${content}/${id}/credits?anguage=en-US&page=1`, options)
     .then((response) => response.json()
+  );
+}
+export function getTrending(content:string,keyValue:string,time:string){
+  return fetch(`${BASE_PATH}/${keyValue}/${content}/${time}?language=en-US`,options)
+      .then((response) => response.json()
   );
 }

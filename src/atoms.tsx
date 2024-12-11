@@ -5,6 +5,12 @@ interface ISlider {
     keyName: string;
     title: string;
 }
+interface ISliderTrending {
+    keyValue: string;
+    content:string;
+    time:string;
+    title: string;
+}
 export interface IMovie{
     id:number;
     title:string;
@@ -12,6 +18,31 @@ export interface IMovie{
     poster_path:string;
     overview:string;
 }
+export const trendingRecoil = atom<ISliderTrending[]>({
+    key: "trendings",
+    default: [
+        {   keyValue:"trending",
+            content:"movie",
+            time: "day",
+            title: "Movie Trending of Today",
+        },{
+            keyValue:"trending",
+            content:"tv",
+            time: "day",
+            title: "Tv Trending of Today",
+        },{
+            keyValue:"trending",
+            content:"movie",
+            time: "week",
+            title: "Weekly Movie Trending",
+        },{
+            keyValue:"trending",
+            content:"tv",
+            time: "week",
+            title: "Weekly Tv Trending",
+        },
+    ],
+});
 export const tvRecoil = atom<ISlider[]>({
     key: "tvShows",
     default: [
@@ -63,6 +94,9 @@ export const searchRecoil = atom({
         },{
             content:"tv",
         },
+        {
+            content:"person",
+        },
     ],
 });
 interface IRoot {
@@ -75,6 +109,7 @@ export const rootRecoil = atom<IRoot>({
         movie: "/",
         tv: "/tv",
         search: "/search",
+        trending: "/trending",
     },
 });
 export interface ITopRatedMovie{
@@ -105,6 +140,7 @@ export interface IGetContentsResult {
 export interface ISearched{
     id:number;
     title:string;
+    name?:string;
     backdrop_path:string;
     poster_path:string;
     overview:string;
