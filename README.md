@@ -1,5 +1,7 @@
 ![header](https://capsule-render.vercel.app/api?type=venom&color=0:ff7f50,100:d50032&height=290&section=header&text=Netflix%20Clone&fontSize=90)
 
+**Link :** https://jinkyeongk.github.io/netflix-react-app/
+
 ## 프로젝트 소개
 Netflix React App은 Netflix와 유사한 사용자 경험을 제공하는 React 기반의 웹 애플리케이션입니다. 
 동적인 영화 목록을 관리하고, 사용자가 다양한 영화와 TV 프로그램을 탐색할 수 있도록 하는 것을 목표로 했습니다.
