@@ -66,44 +66,4 @@ npm start
 
 ### ● Data Structure
 
-📦src
- ┣ 📂Components
- ┃ ┣ 📜Banner.tsx
- ┃ ┣ 📜CreditList.tsx
- ┃ ┣ 📜Header.tsx
- ┃ ┣ 📜MovieModal.tsx
- ┃ ┣ 📜SearchedContentModal.tsx
- ┃ ┣ 📜SearchedSlider.tsx
- ┃ ┣ 📜SimilarList.tsx
- ┃ ┣ 📜Slider.tsx
- ┃ ┣ 📜TrendingContentSlider.tsx
- ┃ ┣ 📜TrendingModal.tsx
- ┃ ┗ 📜TvShowModal.tsx
- ┣ 📂Routes
- ┃ ┣ 📜Home.tsx
- ┃ ┣ 📜Search.tsx
- ┃ ┣ 📜Trending.tsx
- ┃ ┗ 📜Tv.tsx
- ┣ 📂assets
- ┃ ┣ 📜logo.svg
- ┃ ┗ 📜react.svg
- ┣ 📂styles
- ┃ ┣ 📜CommonStyle.tsx
- ┃ ┣ 📜ListStyle.tsx
- ┃ ┣ 📜ModalStyle.tsx
- ┃ ┣ 📜SearchedSliderStyle.tsx
- ┃ ┣ 📜SimilarListStyle.tsx
- ┃ ┗ 📜SliderStyle.tsx
- ┣ 📜.DS_Store
- ┣ 📜App.css
- ┣ 📜App.tsx
- ┣ 📜api.ts
- ┣ 📜atoms.tsx
- ┣ 📜craco.config.js
- ┣ 📜main.tsx
- ┣ 📜styled.d.ts
- ┣ 📜svg.d.ts
- ┣ 📜svg.tsx
- ┣ 📜theme.ts
- ┣ 📜utils.ts
- ┗ 📜vite-env.d.ts
+<img width="328" alt="스크린샷 2024-12-13 오전 10 27 30" src="https://github.com/user-attachments/assets/f71d3a63-194f-402e-8ece-195493681a54" />
