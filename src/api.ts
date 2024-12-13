@@ -94,8 +94,8 @@ export function getCredits(id: number, content: string) {
     .then((response) => response.json()
   );
 }
-export function getTrending(content:string,keyValue:string,time:string){
-  return fetch(`${BASE_PATH}/${keyValue}/${content}/${time}?language=en-US`,options)
+export function getTrending(content:string,keyName:string){
+  return fetch(`${BASE_PATH}/trending/${content}/${keyName}?language=en-US`,options)
       .then((response) => response.json()
   );
 }

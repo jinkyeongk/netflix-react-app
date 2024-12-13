@@ -15,14 +15,13 @@ import SimilarList from './SimilarList';
 import CreditList from './CreditList';
 interface IMovieModal {
     clickedContent: IContent;
-    keyValue:string;
     content:string;
     keyName:string;
     scrollY:number;
 
 }
 
-function TrendingModal({ clickedContent,keyValue ,content, keyName, scrollY }: IMovieModal){
+function TrendingModal({ clickedContent,content, keyName, scrollY }: IMovieModal){
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -35,7 +34,7 @@ function TrendingModal({ clickedContent,keyValue ,content, keyName, scrollY }: I
   };
   const history = useHistory();
   const getRoot = useRecoilValue(rootRecoil);
-  const onOverlayClick = () => history.push(getRoot[keyValue]);
+  const onOverlayClick = () => history.push(getRoot["trending"]);
   const contentId = clickedContent.id ;
   const { data , isLoading } = useQuery<IGetMovieDetails>(
       { queryKey: [content, contentId], queryFn:

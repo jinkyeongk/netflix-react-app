@@ -10,34 +10,34 @@ import Banner from './Banner';
 import { Loader } from '../styles/CommonStyle';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import TrendingModal from './TrendingModal';
+import TrendingTvModal from './TrendingTvModal';
 
 
 
 const offset = 6;
 
 interface ISlide {
-    keyContent: string;
+    content: string;
     slideTitle: string;
-    timing:string;
     keyName:string;
     hasBanner:boolean;
 }
 
-function TrendingContentSlider({keyContent, keyName,timing ,slideTitle, hasBanner}:ISlide){
+function TrendingContentSlider({content, keyName,slideTitle, hasBanner}:ISlide){
 
     const history = useHistory();
     const [index, setIndex] = useState(0);
     const [isNext, setIsNext] = useState(true);
     const [leaving,setLeaving] = useState(false);
-    const bigContentMatch = useRouteMatch<{contentId : string}>(`/${keyName}/${keyContent}/:contentId`); //[prams.contentId], path, url
+    const bigContentMatch = useRouteMatch<{contentId : string}>(`/trending/${content}/${keyName}/:contentId`); //[prams.contentId], path, url
     const {scrollY} = useScroll();
     const toggleLeaving = () =>setLeaving((prev)=> !prev);
     const onBoxClicked = (contentId:number) =>{
-        history.push(`/${keyName}/${keyContent}/${contentId}`);
+        history.push(`/trending/${content}/${keyName}/${contentId}`);
     };
 
-    const { data  ,isLoading } = useQuery<any>({ queryKey: [keyContent, keyName,timing]
-        , queryFn: () => getTrending(keyContent,keyName,timing) });
+    const { data  ,isLoading } = useQuery<any>({ queryKey: [content, keyName]
+        , queryFn: () => getTrending(content,keyName) });
 
         const contentFilter = (view : IContent) => {
             
@@ -104,7 +104,7 @@ function TrendingContentSlider({keyContent, keyName,timing ,slideTitle, hasBanne
         {isLoading  ? ( 
           <Loader><AiOutlineLoading3Quarters /></Loader> 
         ) : ( <>
-            {hasBanner && <Banner Bannerdata={BannerContent as IContent} content={keyName} keyName={keyContent}/> }
+            {hasBanner && <Banner Bannerdata={BannerContent as IContent} content={content} keyName={keyName}/> }
         <SlideWrapper>
             <SliderTitle>{slideTitle}</SliderTitle>
             <Slide>           
@@ -120,8 +120,8 @@ function TrendingContentSlider({keyContent, keyName,timing ,slideTitle, hasBanne
                         .slice(offset * index, offset * index + offset)
                         .map((content)=>(
                             <Box 
+                            key={content.id+ "_" +keyName}
                             layoutId={content.id + "_" +keyName}
-                            key={content.id}
                             variants={boxVariants}
                             whileHover="hover"
                             initial="normal"
@@ -151,10 +151,14 @@ function TrendingContentSlider({keyContent, keyName,timing ,slideTitle, hasBanne
         </SlideWrapper>
         </>
      )}
-        {bigContentMatch && 
-            <TrendingModal clickedContent={clickedContent as IContent} keyValue ={keyName}  content={keyContent} keyName ={timing} scrollY={scrollY.get()} />
-
-        }
+     {bigContentMatch ? (content == 'tv' ? (
+            <TrendingTvModal  clickedContent={clickedContent as IContent}  content={content} keyName ={keyName} scrollY={scrollY.get()} />
+        ) :(
+            <TrendingModal  clickedContent={clickedContent as IContent}  content={content} keyName ={keyName} scrollY={scrollY.get()} />
+            // <MovieModal  clickedContent={clickedContent as IContent} content={keyContent}  keyName ={keyName} scrollY={scrollY.get()} />
+        ) )
+        :null }
+        
     
     </>);
 };

@@ -6,9 +6,8 @@ interface ISlider {
     title: string;
 }
 interface ISliderTrending {
-    keyValue: string;
     content:string;
-    time:string;
+    keyName:string;
     title: string;
 }
 export interface IMovie{
@@ -21,25 +20,25 @@ export interface IMovie{
 export const trendingRecoil = atom<ISliderTrending[]>({
     key: "trendings",
     default: [
-        {   keyValue:"trending",
+        {
             content:"movie",
-            time: "day",
-            title: "Movie Trending of Today",
-        },{
-            keyValue:"trending",
-            content:"tv",
-            time: "day",
-            title: "Tv Trending of Today",
-        },{
-            keyValue:"trending",
-            content:"movie",
-            time: "week",
+            keyName: "week",
             title: "Weekly Movie Trending",
-        },{
-            keyValue:"trending",
+        },
+        {
             content:"tv",
-            time: "week",
+            keyName: "week",
             title: "Weekly Tv Trending",
+        },
+        {
+            content:"movie",
+            keyName: "day",
+            title: "Daily Movie Trending",
+        },
+        {
+            content:"tv",
+            keyName: "day",
+            title: "Daily Movie Trending",
         },
     ],
 });
