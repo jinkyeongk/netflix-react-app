@@ -71,7 +71,13 @@ function Banner({Bannerdata, content,keyName}:IBanner){
   const history = useHistory();
   const BannerId = Bannerdata.id;
   const onBoxClicked = (BannerId:number) =>{
-    history.push(`/${content}/${keyName}/${BannerId}`);
+    if(keyName==="week"||keyName ==="day"){
+
+      history.push(`/trending/${content}/${keyName}/${BannerId}`);
+    }else{
+      history.push(`/${content}/${keyName}/${BannerId}`);
+
+    }
 };
     return(
         <BannerArea 
