@@ -33,6 +33,7 @@ Modal의 BigCover에 Hover시 useState값을 이용하여 구분하고, 유튜�
 
 ##### 3. Search 
 ![2024-12-1210 55 33-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/b598e595-613e-4a03-beae-ee2c32dfefd0)
+
 **Description:**
 검색창에 엔터를 치면, history.push(React Router v5까지 지원)를 통해/search로 redirect됩니다. 
 Movie,Tv shows, Person에 대해 차례대로 검색한 키워드에 대한 결과값이 슬라이드로 보여집니다. 
