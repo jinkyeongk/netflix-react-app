@@ -141,12 +141,12 @@ function Slider({keyContent, keyName, slideTitle, hasBanner}:ISlide){
                         ))}
                     </Row>
                     <SliderControl>
-                        <PrevBtn onClick={decreaseIndex} onMouseEnter={() => setIsNext(false)}>
+                        <PrevBtn onClick={decreaseIndex} onMouseEnter={() => setIsNext(false)}>prev
                             <AngleSvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                                 <AngleLeftSvg />
                             </AngleSvg>
                         </PrevBtn>
-                        <NextBtn onClick={increaseIndex} onMouseEnter={() => setIsNext(true)}>
+                        <NextBtn onClick={increaseIndex} onMouseEnter={() => setIsNext(true)}>next
                             <AngleSvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                                 <AngleRightSvg></AngleRightSvg>
                             </AngleSvg>

@@ -4,6 +4,7 @@ import { IoInformationCircleOutline } from "react-icons/io5";
 import { motion,AnimatePresence } from "framer-motion";
 import { IContent } from '../api';
 import { useHistory } from 'react-router';
+import { trendingRecoil } from '../atoms';
 
 interface IBanner{
   Bannerdata:IContent;
@@ -69,11 +70,11 @@ const moreInfoVariants={
 
 function Banner({Bannerdata, content,keyName}:IBanner){
   const history = useHistory();
+  const recoilKey = trendingRecoil.key;
   const BannerId = Bannerdata.id;
   const onBoxClicked = (BannerId:number) =>{
     if(keyName==="week"||keyName ==="day"){
-
-      history.push(`/trending/${content}/${keyName}/${BannerId}`);
+      history.push(`/${recoilKey}/${content}/${keyName}/${BannerId}`);
     }else{
       history.push(`/${content}/${keyName}/${BannerId}`);
 

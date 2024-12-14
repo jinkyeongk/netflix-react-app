@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import { getDetails, getVideos, IContent, IGetVideos, IVideoContents } from '../api';
 import { BigCover, BigMovie, BigOverview, BigTitle, CloseButton, DetailInfo, GenresInfo, Overlay, OverviewContents, Svg, Vote } from '../styles/ModalStyle';
 import { useRecoilValue } from 'recoil';
-import { IGetMovieDetails, rootRecoil } from '../atoms';
+import { IGetMovieDetails, rootRecoil, trendingRecoil } from '../atoms';
 import { useQuery } from '@tanstack/react-query';
 import { AnimatePresence } from 'framer-motion';
 import { FaStar } from 'react-icons/fa6';
@@ -34,7 +34,8 @@ function TrendingModal({ clickedContent,content, keyName, scrollY }: IMovieModal
   };
   const history = useHistory();
   const getRoot = useRecoilValue(rootRecoil);
-  const onOverlayClick = () => history.push(getRoot["trending"]);
+  const recoilKey = trendingRecoil.key;
+  const onOverlayClick = () => history.push(getRoot[recoilKey]);
   const contentId = clickedContent.id ;
   const { data , isLoading } = useQuery<IGetMovieDetails>(
       { queryKey: [content, contentId], queryFn:

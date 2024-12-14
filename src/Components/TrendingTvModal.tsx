@@ -4,7 +4,7 @@ import {  TimesSvg } from '../svg';
 import { useHistory } from 'react-router';
 import { getDetails, IContent } from '../api';
 import { useRecoilValue } from 'recoil';
-import { IGetDetails, rootRecoil } from '../atoms';
+import { IGetDetails, rootRecoil, trendingRecoil } from '../atoms';
 import { useQuery } from '@tanstack/react-query';
 import { FaStar } from "react-icons/fa6";
 import { BigCover, BigMovie, BigOverview, BigTitle, CloseButton, DetailInfo, GenresInfo, Overlay, OverviewContents, Svg, Vote } from '../styles/ModalStyle';
@@ -23,7 +23,8 @@ function TvShowModal({ clickedContent, content,keyName, scrollY }: ITvShowModal)
     
   const history = useHistory();
     const getRoot = useRecoilValue(rootRecoil);
-    const onOverlayClick = () => history.push(getRoot["trending"]);
+    const recoilKey = trendingRecoil.key;
+    const onOverlayClick = () => history.push(getRoot[recoilKey]);
     const contentId = clickedContent.id ;
     const { data, isLoading } = useQuery<IGetDetails>(
       { queryKey: [content, contentId], queryFn:

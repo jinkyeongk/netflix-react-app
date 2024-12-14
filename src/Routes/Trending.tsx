@@ -8,7 +8,6 @@ import TrendingContentSlider from '../Components/TrendingContentSlider';
 
 function Trending(){
     const getTrendings= useRecoilValue(trendingRecoil);
-
     return (
         <Wrapper>
           <>

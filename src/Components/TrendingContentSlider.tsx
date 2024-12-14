@@ -11,6 +11,7 @@ import { Loader } from '../styles/CommonStyle';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import TrendingModal from './TrendingModal';
 import TrendingTvModal from './TrendingTvModal';
+import { trendingRecoil } from '../atoms';
 
 
 
@@ -29,11 +30,12 @@ function TrendingContentSlider({content, keyName,slideTitle, hasBanner}:ISlide){
     const [index, setIndex] = useState(0);
     const [isNext, setIsNext] = useState(true);
     const [leaving,setLeaving] = useState(false);
-    const bigContentMatch = useRouteMatch<{contentId : string}>(`/trending/${content}/${keyName}/:contentId`); //[prams.contentId], path, url
+    const recoilKey = trendingRecoil.key;
+    const bigContentMatch = useRouteMatch<{contentId : string}>(`/${recoilKey}/${content}/${keyName}/:contentId`); //[prams.contentId], path, url
     const {scrollY} = useScroll();
     const toggleLeaving = () =>setLeaving((prev)=> !prev);
     const onBoxClicked = (contentId:number) =>{
-        history.push(`/trending/${content}/${keyName}/${contentId}`);
+        history.push(`/${recoilKey}/${content}/${keyName}/${contentId}`);
     };
 
     const { data  ,isLoading } = useQuery<any>({ queryKey: [content, keyName]

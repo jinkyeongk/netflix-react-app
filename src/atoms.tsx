@@ -18,7 +18,7 @@ export interface IMovie{
     overview:string;
 }
 export const trendingRecoil = atom<ISliderTrending[]>({
-    key: "trendings",
+    key: "trending",
     default: [
         {
             content:"movie",
